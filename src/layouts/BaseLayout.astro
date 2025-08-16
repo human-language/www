@@ -63,13 +63,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       // Remove no-js class
       document.documentElement.classList.remove("no-js");
 
-      // Theme detection
-      const theme =
-        localStorage.getItem("theme") ||
-        (window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light");
-      document.documentElement.classList.toggle("dark", theme === "dark");
+      // Force light mode
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
 
       // Prevent FOUC
       document.documentElement.style.visibility = "visible";
@@ -88,8 +84,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     />
 
     <!-- Performance hints -->
-    <meta name="color-scheme" content="light dark" />
-    <meta name="supported-color-schemes" content="light dark" />
+    <meta name="color-scheme" content="light" />
+    <meta name="supported-color-schemes" content="light" />
   </head>
   <body class="min-h-screen flex flex-col" data-instant-intensity="viewport">
     <slot />

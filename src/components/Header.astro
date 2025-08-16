@@ -14,12 +14,20 @@ const { class: className } = Astro.props;
       <!-- Logo (left) -->
       <div class="flex justify-start">
         <a href="/" class="flex items-center">
-          <span class="text-2xl font-bold font-garamond italic">Human</span>
+          <span class="text-2xl font-bold">Human</span>
         </a>
       </div>
 
       <!-- Center navigation -->
-      <div class="flex items-center justify-center gap-6">
+      <div class="flex items-center justify-center gap-6"></div>
+
+      <!-- Docs button (right) -->
+      <div class="flex justify-end gap-6 items-center">
+        <span
+          style="padding: 4px 12px; font-size: 12px; font-weight: 500; color: #374151; background-color: #f3f4f6; border: 1px solid #9ca3af; border-radius: 9999px; display: inline-block;"
+        >
+          v0.1.0-alpha
+        </span>
         <a
           href="/about"
           class="text-gray-600 hover:text-gray-900 transition-colors"
@@ -32,18 +40,19 @@ const { class: className } = Astro.props;
         >
           Community
         </a>
-      </div>
-
-      <!-- Docs button (right) -->
-      <div class="flex justify-end">
         <a
-          href="/docs"
-          class="btn btn-primary inline-flex items-center gap-2"
-          data-astro-prefetch="hover"
+          href="https://github.com/human-language"
+          class="text-gray-600 hover:text-gray-900 transition-colors"
+          aria-label="GitHub"
         >
-          <Icon name="BookText" size={18} />
-          Documentation
+          <Icon name="Github" size={20} />
         </a>
+        <button
+          class="text-gray-600 hover:text-gray-900 transition-colors"
+          aria-label="Toggle theme"
+        >
+          <Icon name="Sun" size={20} />
+        </button>
       </div>
     </nav>
   </div>

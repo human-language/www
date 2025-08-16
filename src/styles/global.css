@@ -42,7 +42,7 @@
   }
 
   body {
-    @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
+    @apply bg-white text-gray-900;
     @apply font-sans antialiased;
     /* Enable font smoothing */
     -webkit-font-smoothing: antialiased;
