@@ -2,14 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Fonts */
+/* Font Face for optimized loading */
 @font-face {
   font-family: 'EB Garamond';
-  src: url('/fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900;
   font-style: italic;
-  font-display: swap;
+  font-weight: 100 900;
+  font-display: swap; /* Show text immediately with fallback */
+  src: url('/fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('truetype');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; /* Latin subset */
 }
+
+/* Use system fonts as immediate fallback */
 
 @layer base {
   :root {
@@ -34,12 +37,20 @@
   }
 
   html {
-    @apply scroll-smooth;
+    /* Remove smooth scroll for instant navigation */
+    scroll-behavior: auto;
   }
 
   body {
     @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
     @apply font-sans antialiased;
+    /* Enable font smoothing */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Optimize text rendering */
+    text-rendering: optimizeLegibility;
+    /* Prevent layout shift from scrollbar */
+    scrollbar-gutter: stable;
   }
   
   /* Ensure light theme is the default */
@@ -51,17 +62,29 @@
     color-scheme: dark;
   }
 
-  /* Code block styles */
+  /* Simplified code block styles with performance optimizations */
   pre {
     @apply overflow-x-auto rounded-lg p-4 my-4;
     @apply bg-gray-900 dark:bg-gray-950;
-  }
-
-  pre code {
     @apply text-sm leading-relaxed;
+    /* CSS containment for better performance */
+    contain: layout style paint;
+    /* GPU acceleration for smooth scrolling */
+    will-change: transform;
   }
 
-  /* Custom scrollbar */
+  code {
+    @apply text-sm;
+  }
+
+  /* Custom scrollbar with reduced repaints */
+  @supports (scrollbar-width: thin) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: theme('colors.gray.400') theme('colors.gray.100');
+    }
+  }
+  
   ::-webkit-scrollbar {
     @apply w-2 h-2;
   }
@@ -72,6 +95,8 @@
 
   ::-webkit-scrollbar-thumb {
     @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+    /* Reduce repaints on hover */
+    transition: background-color 0.2s;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -85,12 +110,40 @@
 }
 
 @layer components {
-  .prose-docs {
-    @apply prose prose-gray dark:prose-invert max-w-none;
-    @apply prose-headings:scroll-mt-20 prose-headings:font-semibold;
-    @apply prose-code:before:content-none prose-code:after:content-none;
-    @apply prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950;
-    @apply prose-a:no-underline prose-a:font-medium;
+  /* Ultra-minimal docs styling - no heavy CSS */
+  .docs-content h1,
+  .legal-content h1 {
+    @apply text-4xl font-bold mb-4;
+  }
+  
+  .docs-content h2,
+  .legal-content h2 {
+    @apply text-2xl font-semibold mt-8 mb-4;
+  }
+  
+  .docs-content p,
+  .legal-content p {
+    @apply mb-4 leading-relaxed;
+  }
+  
+  .docs-content pre,
+  .legal-content pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  }
+  
+  .docs-content code,
+  .legal-content code {
+    @apply text-sm font-mono;
+  }
+  
+  .docs-content ul,
+  .legal-content ul {
+    @apply list-disc pl-6 mb-4;
+  }
+  
+  .docs-content ol,
+  .legal-content ol {
+    @apply list-decimal pl-6 mb-4;
   }
 
   .nav-link {
@@ -170,5 +223,35 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+  
+  /* Performance utilities */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .contain-paint {
+    contain: paint;
+  }
+  
+  .contain-layout {
+    contain: layout;
+  }
+  
+  .contain-strict {
+    contain: strict;
+  }
+  
+  /* Reduced motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

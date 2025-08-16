@@ -1,12 +1,12 @@
 ---
 layout: "@layouts/DocsLayout.astro"
 title: "Documentation"
-description: "YourLang documentation"
+description: "Human language documentation"
 ---
 
 # Documentation
 
-Welcome to the YourLang documentation.
+Welcome to the Human documentation.
 
 ## Getting Started
 
@@ -15,13 +15,13 @@ This is where your documentation content will go.
 ## Installation
 
 ```bash
-# Install YourLang
-npm install yourlang
+# Install Human
+npm install human-lang
 ```
 
 ## Quick Example
 
 ```javascript
 // Your code example here
-console.log("Hello, YourLang!");
+console.log("Hello, Human!");
 ```

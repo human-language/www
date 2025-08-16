@@ -1,62 +1,142 @@
 ---
-import { SEO } from "astro-seo";
 import "@styles/global.css";
 import Footer from "@components/Footer.astro";
 
 export interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  noindex?: boolean;
 }
 
-const { title = "YourLang", description = "A modern programming language" } =
-  Astro.props;
+const {
+  title = "YourLang",
+  description = "A modern programming language",
+  image = "/og-image.png",
+  noindex = false,
+} = Astro.props;
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://human-lang.com";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
 
-    <SEO
-      title={title}
-      description={description}
-      canonical={`${siteUrl}${Astro.url.pathname}`}
-      openGraph={{
-        basic: {
-          title: title,
-          type: "website",
-          image: `${siteUrl}/og-image.png`,
-        },
-      }}
+    <!-- Preconnect to critical origins -->
+    <link rel="preconnect" href={Astro.site} crossorigin />
+    <link rel="dns-prefetch" href={Astro.site} />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#3b82f6" />
+
+    <!-- Robots -->
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- No View Transitions for instant navigation -->
+
+    <!-- Critical inline scripts -->
+    <script is:inline>
+      // Remove no-js class
+      document.documentElement.classList.remove("no-js");
+
+      // Theme detection
+      const theme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      document.documentElement.classList.toggle("dark", theme === "dark");
+
+      // Prevent FOUC
+      document.documentElement.style.visibility = "visible";
+    </script>
+
+    <!-- Preload critical resources -->
+    <link rel="modulepreload" href="/_astro/hoisted.js" />
+
+    <!-- Preload fonts -->
+    <link
+      rel="preload"
+      href="/fonts/EBGaramond-Italic-VariableFont_wght.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
     />
 
-    <!-- Theme detection -->
-    <script is:inline>
-      const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme");
-        }
-        return "light";
-      })();
-
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    </script>
+    <!-- Performance hints -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
   </head>
-  <body>
-    <!-- Content should use max-w-7xl (1280px) for consistent spacing -->
+  <body class="min-h-screen flex flex-col" data-instant-intensity="viewport">
     <slot />
     <Footer />
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ("serviceWorker" in navigator && !navigator.serviceWorker.controller) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js", { scope: "/" })
+            .then((reg) => console.log("SW registered:", reg.scope))
+            .catch((err) => console.error("SW registration failed:", err));
+        });
+      }
+    </script>
+
+    <!-- Web Vitals - Load only after page is interactive -->
+    <script type="module">
+      // Defer web vitals loading to reduce initial JS
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(() => {
+          import(
+            "https://unpkg.com/web-vitals@3/dist/web-vitals.attribution.js?module"
+          ).then(({ onCLS, onINP, onLCP, onFCP, onTTFB }) => {
+            const sendToAnalytics = ({ name, value, rating }) => {
+              // Only log in dev, send to analytics in production
+              if (import.meta.env.DEV) {
+                console.log(`${name}: ${value} (${rating})`);
+              }
+            };
+
+            onCLS(sendToAnalytics);
+            onINP(sendToAnalytics);
+            onLCP(sendToAnalytics);
+            onFCP(sendToAnalytics);
+            onTTFB(sendToAnalytics);
+          });
+        });
+      }
+    </script>
+
+    <!-- Instant page prefetching -->
+    <script
+      src="//instant.page/5.2.0"
+      type="module"
+      integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+    ></script>
   </body>
 </html>

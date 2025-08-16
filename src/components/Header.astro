@@ -1,5 +1,5 @@
 ---
-import { BookText } from "@lucide/astro";
+import Icon from "@components/Icons.astro";
 
 export interface Props {
   class?: string;
@@ -36,8 +36,12 @@ const { class: className } = Astro.props;
 
       <!-- Docs button (right) -->
       <div class="flex justify-end">
-        <a href="/docs" class="btn btn-primary inline-flex items-center gap-2">
-          <BookText size={18} />
+        <a
+          href="/docs"
+          class="btn btn-primary inline-flex items-center gap-2"
+          data-astro-prefetch="hover"
+        >
+          <Icon name="BookText" size={18} />
           Documentation
         </a>
       </div>

@@ -1,11 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: [
+    './src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}',
+    './public/**/*.html'
+  ],
   darkMode: 'class',
+  // Enable JIT mode for smaller CSS bundles
+  mode: 'jit',
   theme: {
     extend: {
       fontFamily: {
-        'garamond': ['EB Garamond', 'serif'],
+        'garamond': ['Georgia', 'Cambria', 'serif'], // Use system serif fonts
       },
       colors: {
         primary: {
@@ -106,8 +111,10 @@ export default {
       }),
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [],
+  // Optimize for production
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 }
 

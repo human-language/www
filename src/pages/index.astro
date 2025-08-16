@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Header from "@components/Header.astro";
-import { ChevronRight, Github } from "@lucide/astro";
+import Icon from "@components/Icons.astro";
 ---
 
 <BaseLayout title="Welcome">
@@ -17,13 +17,13 @@ import { ChevronRight, Github } from "@lucide/astro";
       <div class="flex gap-4 justify-center">
         <a href="/docs" class="btn btn-primary inline-flex items-center gap-2">
           Get Started
-          <ChevronRight size={18} />
+          <Icon name="ChevronRight" size={18} />
         </a>
         <a
           href="https://github.com"
           class="btn btn-secondary inline-flex items-center gap-2"
         >
-          <Github size={18} />
+          <Icon name="Github" size={18} />
           GitHub
         </a>
       </div>
