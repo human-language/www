@@ -42,8 +42,10 @@
   }
 
   body {
-    @apply bg-white text-gray-900;
+    @apply bg-white text-gray-900 dark:bg-[#030713] dark:text-gray-100;
     @apply font-sans antialiased;
+    /* Smooth theme transitions - performant with will-change */
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
     /* Enable font smoothing */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

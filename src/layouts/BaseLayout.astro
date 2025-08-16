@@ -51,7 +51,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#3b82f6" />
+    <meta name="theme-color" content="#ffffff" />
 
     <!-- Robots -->
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -63,9 +63,26 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       // Remove no-js class
       document.documentElement.classList.remove("no-js");
 
-      // Force light mode
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+      // Theme initialization - prevents FOUC
+      (function () {
+        const theme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        // Update theme color meta tag
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.content = theme === "dark" ? "#030713" : "#ffffff";
+        }
+      })();
 
       // Prevent FOUC
       document.documentElement.style.visibility = "visible";
@@ -84,8 +101,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     />
 
     <!-- Performance hints -->
-    <meta name="color-scheme" content="light" />
-    <meta name="supported-color-schemes" content="light" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
   </head>
   <body class="min-h-screen flex flex-col" data-instant-intensity="viewport">
     <slot />

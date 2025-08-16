@@ -1,5 +1,6 @@
 ---
 import Icon from "@components/Icons.astro";
+import ThemeToggle from "@components/ThemeToggle.astro";
 
 export interface Props {
   class?: string;
@@ -14,7 +15,9 @@ const { class: className } = Astro.props;
       <!-- Logo (left) -->
       <div class="flex justify-start">
         <a href="/" class="flex items-center">
-          <span class="text-2xl font-bold">Human</span>
+          <span class="text-2xl font-bold text-gray-900 dark:text-gray-100"
+            >Human</span
+          >
         </a>
       </div>
 
@@ -24,35 +27,30 @@ const { class: className } = Astro.props;
       <!-- Docs button (right) -->
       <div class="flex justify-end gap-6 items-center">
         <span
-          style="padding: 4px 12px; font-size: 12px; font-weight: 500; color: #374151; background-color: #f3f4f6; border: 1px solid #9ca3af; border-radius: 9999px; display: inline-block;"
+          class="px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-400 dark:border-gray-600 rounded-full"
         >
           v0.1.0-alpha
         </span>
         <a
           href="/about"
-          class="text-gray-600 hover:text-gray-900 transition-colors"
+          class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
         >
           About
         </a>
         <a
           href="/community"
-          class="text-gray-600 hover:text-gray-900 transition-colors"
+          class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
         >
           Community
         </a>
         <a
           href="https://github.com/human-language"
-          class="text-gray-600 hover:text-gray-900 transition-colors"
+          class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
           aria-label="GitHub"
         >
           <Icon name="Github" size={20} />
         </a>
-        <button
-          class="text-gray-600 hover:text-gray-900 transition-colors"
-          aria-label="Toggle theme"
-        >
-          <Icon name="Sun" size={20} />
-        </button>
+        <ThemeToggle />
       </div>
     </nav>
   </div>

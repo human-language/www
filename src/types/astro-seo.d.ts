@@ -52,5 +52,5 @@ declare module 'astro-seo' {
     };
   }
 
-  export const SEO: (props: Props) => any;
+  export const SEO: (props: Props) => any
 }
