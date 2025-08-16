@@ -1,16 +1,19 @@
 ---
-
+import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Welcome">
+  <main class="min-h-screen">
+    <div class="container mx-auto px-4 py-16">
+      <h1 class="text-6xl font-bold mb-4">YourLang</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+        A modern programming language
+      </p>
+
+      <div class="flex gap-4">
+        <a href="/docs" class="btn btn-primary"> Get Started </a>
+        <a href="https://github.com" class="btn btn-secondary"> GitHub </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

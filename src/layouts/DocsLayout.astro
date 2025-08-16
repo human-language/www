@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen">
+    <!-- Simple header with nav -->
+    <header class="border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 py-4">
+        <nav class="flex items-center justify-between">
+          <a href="/" class="text-xl font-bold">YourLang</a>
+          <div class="flex gap-6">
+            <a
+              href="/"
+              class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+            >
+              Home
+            </a>
+            <a
+              href="/docs"
+              class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+            >
+              Docs
+            </a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main content area -->
+    <main class="container mx-auto px-4 py-8">
+      <div class="max-w-4xl mx-auto">
+        <article class="prose prose-gray dark:prose-invert max-w-none">
+          <slot />
+        </article>
+      </div>
+    </main>
+  </div>
+</BaseLayout>

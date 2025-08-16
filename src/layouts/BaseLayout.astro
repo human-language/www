@@ -1,0 +1,60 @@
+---
+import { SEO } from "astro-seo";
+import "@styles/global.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "YourLang", description = "A modern programming language" } =
+  Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://human-lang.com";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <SEO
+      title={title}
+      description={description}
+      canonical={`${siteUrl}${Astro.url.pathname}`}
+      openGraph={{
+        basic: {
+          title: title,
+          type: "website",
+          image: `${siteUrl}/og-image.png`,
+        },
+      }}
+    />
+
+    <!-- Theme detection -->
+    <script is:inline>
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        // Default to light theme
+        return "light";
+      })();
+
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
