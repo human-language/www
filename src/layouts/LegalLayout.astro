@@ -14,39 +14,23 @@ const { title, description, lastUpdated } = Astro.props;
 <BaseLayout title={title} description={description}>
   <Header />
 
-  <main class="min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <main class="min-h-[800px]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="max-w-3xl mx-auto">
         <!-- Page header -->
-        <header class="mb-8 pb-8 border-b border-gray-200 dark:border-gray-800">
-          <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            {title}
-          </h1>
-          {
-            lastUpdated && (
-              <p class="text-sm text-gray-500 dark:text-gray-400">
-                Last updated: {lastUpdated}
-              </p>
-            )
-          }
-        </header>
+        <h1 class="text-5xl font-bold mb-4 font-garamond italic">{title}</h1>
+        {
+          lastUpdated && (
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+              Last updated: {lastUpdated}
+            </p>
+          )
+        }
 
         <!-- Legal content -->
         <article class="prose prose-gray dark:prose-invert max-w-none">
           <slot />
         </article>
-
-        <!-- Back to home link -->
-        <footer
-          class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800"
-        >
-          <a
-            href="/"
-            class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-          >
-            ← Back to Home
-          </a>
-        </footer>
       </div>
     </div>
   </main>
