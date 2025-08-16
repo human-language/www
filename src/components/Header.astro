@@ -1,0 +1,39 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<header class={`w-full pt-2.5 ${className || ""}`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="flex items-center">
+        <span class="text-2xl font-bold font-garamond italic">Human</span>
+      </a>
+
+      <!-- Center-right navigation -->
+      <div class="flex items-center gap-8">
+        <div class="flex items-center gap-6">
+          <a
+            href="/about"
+            class="text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            About
+          </a>
+          <a
+            href="/community"
+            class="text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            Community
+          </a>
+        </div>
+
+        <!-- Docs button -->
+        <a href="/docs" class="btn btn-primary"> Documentation </a>
+      </div>
+    </nav>
+  </div>
+</header>

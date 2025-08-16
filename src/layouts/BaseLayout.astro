@@ -1,6 +1,7 @@
 ---
 import { SEO } from "astro-seo";
 import "@styles/global.css";
+import Footer from "@components/Footer.astro";
 
 export interface Props {
   title?: string;
@@ -43,7 +44,6 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://human-lang.com";
         ) {
           return localStorage.getItem("theme");
         }
-        // Default to light theme
         return "light";
       })();
 
@@ -55,6 +55,8 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://human-lang.com";
     </script>
   </head>
   <body>
+    <!-- Content should use max-w-7xl (1280px) for consistent spacing -->
     <slot />
+    <Footer />
   </body>
 </html>

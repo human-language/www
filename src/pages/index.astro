@@ -1,16 +1,19 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
 ---
 
 <BaseLayout title="Welcome">
-  <main class="min-h-screen">
-    <div class="container mx-auto px-4 py-16">
-      <h1 class="text-6xl font-bold mb-4">YourLang</h1>
+  <Header />
+
+  <main class="min-h-[800px] flex items-center justify-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+      <h1 class="text-8xl font-bold mb-4 font-garamond italic">Human</h1>
       <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
-        A modern programming language
+        The last syntax you'll ever write.
       </p>
 
-      <div class="flex gap-4">
+      <div class="flex gap-4 justify-center">
         <a href="/docs" class="btn btn-primary"> Get Started </a>
         <a href="https://github.com" class="btn btn-secondary"> GitHub </a>
       </div>

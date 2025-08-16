@@ -4,6 +4,9 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        'garamond': ['EB Garamond', 'serif'],
+      },
       colors: {
         primary: {
           50: '#eff6ff',
