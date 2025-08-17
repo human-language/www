@@ -22,30 +22,36 @@ const currentPath = Astro.url.pathname;
 <BaseLayout title={`${title} | Documentation`} description={description}>
   <Header />
 
-  <!-- 3-column layout aligned with header -->
+  <!-- Grid-based 3-column layout -->
   <div class="flex-1 w-full">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex gap-8 lg:gap-12 pt-8">
-        <!-- Sidebar -->
-        <aside class="hidden lg:block w-60 flex-shrink-0">
-          <div class="sticky top-24">
-            <DocsSidebar currentPath={currentPath} />
-          </div>
-        </aside>
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      <!-- Green Column -->
+      <div class="bg-green-500 text-white p-6 rounded-lg">
+        <h3 class="text-xl font-bold mb-2">Green Column</h3>
+        <p>
+          This is the green column content. It will stack on mobile and display
+          in a grid on larger screens.
+        </p>
+      </div>
 
-        <!-- Document -->
-        <main class="flex-1 min-w-0">
-          <Document title={title} description={description}>
-            <slot />
-          </Document>
-        </main>
+      <!-- Blue Column -->
+      <div class="bg-blue-500 text-white p-6 rounded-lg">
+        <h3 class="text-xl font-bold mb-2">Blue Column</h3>
+        <p>
+          This is the blue column content. It will stack on mobile and display
+          in a grid on larger screens.
+        </p>
+      </div>
 
-        <!-- Table of Contents -->
-        <aside class="hidden xl:block w-52 flex-shrink-0">
-          <div class="sticky top-24">
-            <TableOfContents headings={headings} />
-          </div>
-        </aside>
+      <!-- Red Column -->
+      <div class="bg-red-500 text-white p-6 rounded-lg">
+        <h3 class="text-xl font-bold mb-2">Red Column</h3>
+        <p>
+          This is the red column content. It will stack on mobile and display in
+          a grid on larger screens.
+        </p>
       </div>
     </div>
   </div>

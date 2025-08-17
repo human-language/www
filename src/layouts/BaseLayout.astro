@@ -108,18 +108,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <slot />
     <Footer />
 
-    <!-- Service Worker Registration -->
-    <script>
-      if ("serviceWorker" in navigator && !navigator.serviceWorker.controller) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js", { scope: "/" })
-            .then((reg) => console.log("SW registered:", reg.scope))
-            .catch((err) => console.error("SW registration failed:", err));
-        });
-      }
-    </script>
-
     <!-- Web Vitals - Load only after page is interactive -->
     <script type="module">
       // Defer web vitals loading to reduce initial JS

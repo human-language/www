@@ -5,8 +5,6 @@ export default {
     './public/**/*.html'
   ],
   darkMode: 'class',
-  // Enable JIT mode for smaller CSS bundles
-  mode: 'jit',
   theme: {
     extend: {
       fontFamily: {
@@ -26,7 +24,8 @@ export default {
           900: '#1e3a8a',
           950: '#172554',
         },
-        gray: {
+        // Keep custom gray colors
+        customGray: {
           50: '#f9fafb',
           100: '#f3f4f6',
           200: '#e5e7eb',
@@ -44,7 +43,7 @@ export default {
         DEFAULT: {
           css: {
             maxWidth: 'none',
-            color: theme('colors.gray.700'),
+            color: theme('colors.customGray.700'),
             a: {
               color: theme('colors.primary.600'),
               '&:hover': {
@@ -53,7 +52,7 @@ export default {
             },
             code: {
               color: theme('colors.primary.900'),
-              backgroundColor: theme('colors.gray.100'),
+              backgroundColor: theme('colors.customGray.100'),
               padding: '0.125rem 0.375rem',
               borderRadius: '0.25rem',
               fontWeight: '400',
@@ -65,14 +64,14 @@ export default {
               content: '""',
             },
             pre: {
-              backgroundColor: theme('colors.gray.900'),
-              color: theme('colors.gray.100'),
+              backgroundColor: theme('colors.customGray.900'),
+              color: theme('colors.customGray.100'),
             },
           },
         },
         dark: {
           css: {
-            color: theme('colors.gray.300'),
+            color: theme('colors.customGray.300'),
             a: {
               color: theme('colors.primary.400'),
               '&:hover': {
@@ -81,30 +80,30 @@ export default {
             },
             code: {
               color: theme('colors.primary.300'),
-              backgroundColor: theme('colors.gray.800'),
+              backgroundColor: theme('colors.customGray.800'),
             },
             pre: {
-              backgroundColor: theme('colors.gray.950'),
-              color: theme('colors.gray.100'),
+              backgroundColor: theme('colors.customGray.950'),
+              color: theme('colors.customGray.100'),
             },
             h1: {
-              color: theme('colors.gray.100'),
+              color: theme('colors.customGray.100'),
             },
             h2: {
-              color: theme('colors.gray.100'),
+              color: theme('colors.customGray.100'),
             },
             h3: {
-              color: theme('colors.gray.100'),
+              color: theme('colors.customGray.100'),
             },
             h4: {
-              color: theme('colors.gray.100'),
+              color: theme('colors.customGray.100'),
             },
             strong: {
-              color: theme('colors.gray.100'),
+              color: theme('colors.customGray.100'),
             },
             blockquote: {
-              color: theme('colors.gray.400'),
-              borderLeftColor: theme('colors.gray.700'),
+              color: theme('colors.customGray.400'),
+              borderLeftColor: theme('colors.customGray.700'),
             },
           },
         },
