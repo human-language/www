@@ -1,0 +1,24 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<article class="prose prose-gray dark:prose-invert max-w-none">
+  <h1 class="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+    {title}
+  </h1>
+  {
+    description && (
+      <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">{description}</p>
+    )
+  }
+
+  <!-- Page content -->
+  <div class="docs-content">
+    <slot />
+  </div>
+</article>

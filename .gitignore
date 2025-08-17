@@ -26,3 +26,9 @@ pnpm-debug.log*
 # cursor
 .cursor/
 .cursor/*
+
+# vscode
+.vscode/    
+
+# Todo
+TODO.md

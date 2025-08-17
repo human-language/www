@@ -1,0 +1,141 @@
+---
+export interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+// Load all markdown/mdx files that live under `src/pages/docs/`
+// Use Vite's import.meta.glob eagerly at build time
+const docModules = import.meta.glob("../../pages/docs/**/*.{md,mdx}", {
+  eager: true,
+});
+
+type SidebarItem = {
+  title: string;
+  url: string;
+  order: number;
+  filePath: string;
+};
+
+type SidebarSection = {
+  title: string;
+  items: SidebarItem[];
+  order: number;
+};
+
+function toTitleCase(input: string): string {
+  return input
+    .replace(/[-_]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (m) => m.toUpperCase());
+}
+
+function getSectionNameFromUrl(pageUrl: string): string {
+  // Expect URLs like /docs, /docs/Getting%20Started/page
+  const segments = pageUrl.replace(/^\/+|\/+$/g, "").split("/");
+  if (segments[0] !== "docs") return "Overview";
+  const maybeSection = segments[1];
+  if (!maybeSection) return "Overview";
+  return toTitleCase(decodeURIComponent(maybeSection));
+}
+
+function getItemTitle(mod: any, filePath: string): string {
+  if (mod?.frontmatter?.title) return String(mod.frontmatter.title);
+  const filename = filePath.split("/").pop() ?? filePath;
+  const withoutExt = filename.replace(/\.(md|mdx)$/i, "");
+  return toTitleCase(withoutExt);
+}
+
+function filePathToUrl(filePath: string): string {
+  // Convert a /src/pages/docs/... path to a route URL like /docs/...
+  let route = filePath.replace(/^.*\/src\/pages\//, "/");
+  route = route.replace(/\.(md|mdx)$/i, "");
+  if (route.endsWith("/index")) route = route.slice(0, -6);
+  return encodeURI(route);
+}
+
+// Build sections grouped by top-level directory under docs
+const sectionMap = new Map<string, SidebarSection>();
+
+for (const [filePath, mod] of Object.entries(docModules)) {
+  const url = filePathToUrl(filePath);
+
+  // Skip the root docs index page
+  if (url === "/docs" || url === "/docs/") continue;
+
+  const sectionTitle = getSectionNameFromUrl(url);
+  const item: SidebarItem = {
+    title: getItemTitle(mod as any, filePath),
+    url,
+    order: Number((mod as any)?.frontmatter?.order ?? 1_000_000),
+    filePath,
+  };
+
+  if (!sectionMap.has(sectionTitle)) {
+    // Optional section ordering via folder-level index order if present later
+    sectionMap.set(sectionTitle, {
+      title: sectionTitle,
+      items: [],
+      order: 1_000_000,
+    });
+  }
+  sectionMap.get(sectionTitle)!.items.push(item);
+}
+
+// Sort each section's items by `order` then title
+for (const section of sectionMap.values()) {
+  section.items.sort((a, b) => {
+    if (a.order !== b.order) return a.order - b.order;
+    return a.title.localeCompare(b.title);
+  });
+}
+
+// Sort sections alphabetically (simple, predictable)
+const sections = Array.from(sectionMap.values()).sort((a, b) =>
+  a.title.localeCompare(b.title)
+);
+---
+
+<nav class="text-sm">
+  {
+    sections.map((section) => (
+      <section class="mb-6">
+        <div class="px-2 py-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+          {section.title}
+        </div>
+        <ul class="mt-2 space-y-1">
+          {section.items.map((item) => {
+            const isActive =
+              currentPath === item.url || currentPath === `${item.url}/`;
+            return (
+              <li>
+                <a
+                  href={item.url}
+                  class={`block rounded-md px-3 py-2 transition-colors
+                  ${
+                    isActive
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-900/40"
+                  }
+                `}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {item.title}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))
+  }
+  {
+    sections.length === 0 && (
+      <div class="rounded-md border border-dashed border-gray-300 p-3 text-gray-500 dark:border-gray-700 dark:text-gray-400">
+        No docs found in `src/pages/docs/`.
+      </div>
+    )
+  }
+</nav>

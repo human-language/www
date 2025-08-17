@@ -1,26 +1,52 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Header from "@components/Header.astro";
+import Header from "@components/UI/Header.astro";
+import DocsSidebar from "@components/Docs/DocsSidebar.astro";
+import Document from "@components/Docs/Document.astro";
+import TableOfContents from "@components/Docs/TableOfContents.astro";
 
 export interface Props {
   title: string;
   description?: string;
+  headings?: Array<{
+    depth: number;
+    slug: string;
+    text: string;
+  }>;
 }
 
-const { title, description } = Astro.props;
+const { title, description, headings = [] } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <BaseLayout title={title} description={description}>
   <Header />
 
-  <div class="min-h-screen">
-    <!-- Main content area -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="max-w-4xl mx-auto">
-        <article class="docs-content">
-          <slot />
-        </article>
-      </div>
-    </main>
+  <!-- Force 3-column layout at ALL screen sizes with proper spacing -->
+  <div class="max-w-screen-2xl mx-auto px-6 lg:px-8 py-12">
+    <div class="flex flex-row gap-10 lg:gap-12">
+      <!-- Sidebar - Fixed width with padding -->
+      <aside class="w-64 flex-shrink-0">
+        <div class="sticky top-24 pr-4">
+          <DocsSidebar currentPath={currentPath} />
+        </div>
+      </aside>
+
+      <!-- Document - Flexible center column with max width -->
+      <main class="flex-1 min-w-0 max-w-4xl">
+        <div class="px-6">
+          <Document title={title} description={description}>
+            <slot />
+          </Document>
+        </div>
+      </main>
+
+      <!-- Table of Contents - Fixed width with padding -->
+      <aside class="w-56 flex-shrink-0">
+        <div class="sticky top-24 pl-4">
+          <TableOfContents headings={headings} />
+        </div>
+      </aside>
+    </div>
   </div>
 </BaseLayout>
