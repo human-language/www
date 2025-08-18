@@ -2,13 +2,12 @@
 layout: "@layouts/DocsLayout.astro"
 title: "What is Human?"
 description: "Introduction to the Human language"
+order: 1
 ---
 
 # What is Human?
 
-In teaching machines to think, we discover the shape of human thought itself.
-
-Human is a configuration language that tells AI agents how to behave and to sharpen our thinking.
+Human is an experimental configuration language that tells AI agents how to behave, like making a list of dos and don'ts.
 
 ```human
 AGENT assistant
@@ -87,6 +86,7 @@ TEST "creates tickets"
 Run it:
 ```bash
 echo "I'm upset about my order" | human run support.hmn
+# OR feed it directly to an AI such as Claude or GPT
 ```
 
 Output:
@@ -114,34 +114,6 @@ INPUT       EXPECT         IMPORT       EXPORT      AS
 ```
 
 Everything else is just names and values.
-
-## Get Started
-
-```bash
-# Install (30 seconds)
-curl -fsSL https://human-lang.org/install.sh | sh
-
-# Create an agent
-cat > assistant.hmn << 'EOF'
-AGENT assistant
-  model = "gpt-4"
-
-CONSTRAINTS safety
-  NEVER share_private_info
-  MUST be_helpful
-EOF
-
-# Run it
-echo "Hello" | human run assistant.hmn
-```
-
-## Design Philosophy
-
-1. **Text files** - No JSON, no YAML, just readable configuration
-2. **Unix-friendly** - Pipes with grep, sed, and standard tools  
-3. **No compilation** - Direct interpretation, no build step
-4. **Modular** - Single file or folder structure, your choice
-5. **Minimal** - 600 lines of implementation, not 6000
 
 ## Implementation Note
 

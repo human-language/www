@@ -2,13 +2,14 @@
 layout: "@layouts/DocsLayout.astro"
 title: "Quickstart"
 description: "Get started with Human in 5 minutes"
+order: 3
 ---
 
 # Quickstart
 
 Build your first AI agent in 5 minutes.
 
-## Minute 1: Hello Human
+## Hello Human
 
 Create a file called `assistant.hmn`:
 
@@ -20,7 +21,7 @@ AGENT assistant
 
 That's a complete agent. It works.
 
-## Minute 2: Add Boundaries
+## Add Boundaries
 
 Agents need rules. Update your file:
 
@@ -66,7 +67,7 @@ TEST "stays helpful"
 
 Tests ensure your agent behaves consistently.
 
-## Minute 4: Build Something Real
+## Build Something Real
 
 Let's make a code reviewer:
 
@@ -105,7 +106,7 @@ TEST "stays constructive"
   EXPECT not contains terrible or awful
 ```
 
-## Minute 5: Scale With Modules
+## Scale With Modules
 
 As you grow, split into files:
 
@@ -130,32 +131,6 @@ CONSTRAINTS production_rules
   IMPORT safety_core
   MUST follow_sla
   SHOULD cache_responses
-```
-
-## Patterns That Work
-
-### Customer Service
-```human
-CONSTRAINTS service
-  NEVER blame_customer
-  MUST create_ticket
-  SHOULD show_empathy
-```
-
-### Medical Assistant
-```human
-CONSTRAINTS medical
-  NEVER diagnose
-  MUST suggest_see_doctor
-  AVOID medical_advice
-```
-
-### Educational Tutor
-```human
-CONSTRAINTS teaching
-  NEVER give_direct_answers
-  MUST explain_concepts
-  SHOULD use_socratic_method
 ```
 
 ## The Five Levels in Practice
@@ -245,9 +220,3 @@ CONSTRAINTS clear
   AVOID passive_voice
   MUST follow_law
 ```
-
-## Try These Challenges
-
-1. **Build a SQL Assistant** that never drops tables
-2. **Create a Writing Coach** that avoids giving direct rewrites
-3. **Make a Recipe Helper** that must handle dietary restrictions

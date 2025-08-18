@@ -2,6 +2,7 @@
 layout: "@layouts/DocsLayout.astro"
 title: "Installation"
 description: "How to install and set up Human"
+order: 2
 ---
 
 # Installation
@@ -217,7 +218,7 @@ For now, watch the GitHub: [github.com/human-language](https://github.com/human-
 A: Yes. It's just text. Write it, share it, use the patterns.
 
 **Q: When will tools be ready?**  
-A: Building in public. Follow the repo for updates.
+A: Follow the repo for updates.
 
 **Q: What if the spec changes?**  
 A: The five constraint levels are permanent. Everything else might evolve.

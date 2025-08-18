@@ -123,6 +123,26 @@
     @apply text-2xl font-semibold mt-8 mb-4;
   }
   
+  .docs-content h3,
+  .legal-content h3 {
+    @apply text-xl font-semibold mt-6 mb-3;
+  }
+  
+  .docs-content h4,
+  .legal-content h4 {
+    @apply text-lg font-semibold mt-5 mb-2;
+  }
+  
+  .docs-content h5,
+  .legal-content h5 {
+    @apply text-base font-semibold mt-4 mb-2;
+  }
+  
+  .docs-content h6,
+  .legal-content h6 {
+    @apply text-sm font-semibold mt-3 mb-1;
+  }
+  
   .docs-content p,
   .legal-content p {
     @apply mb-4 leading-relaxed;
