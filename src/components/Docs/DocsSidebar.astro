@@ -7,21 +7,17 @@ export interface Props {
 
 const { currentPath } = Astro.props;
 
-// Import all markdown files from the docs folder using import.meta.glob
 const docModules = import.meta.glob("../../pages/docs/**/*.{md,mdx}", {
   eager: true,
 });
 
-// Parse and sort the documentation structure
 const sections = parseDocsStructure(docModules);
 const sortedSections = sortSections(sections);
 
-// Normalize path for comparison (remove trailing slash if present)
 const normalizedPath = currentPath.replace(/\/$/, "");
 ---
 
 <nav class="docs-sidebar">
-  <!-- Dynamic Sections -->
   {
     sortedSections.map(([sectionName, items]) => (
       <div class="mb-6">
@@ -30,7 +26,6 @@ const normalizedPath = currentPath.replace(/\/$/, "");
         </h3>
         <ul class="space-y-1">
           {items.map((item) => {
-            // Normalize item URL for comparison
             const normalizedItemUrl = item.url.replace(/\/$/, "");
             const isActive = normalizedPath === normalizedItemUrl;
             return (

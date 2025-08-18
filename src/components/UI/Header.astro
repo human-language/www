@@ -12,7 +12,6 @@ const { class: className } = Astro.props;
 <header class={`w-full pt-2.5 ${className || ""}`}>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <nav class="grid grid-cols-3 items-center h-16">
-      <!-- Logo (left) -->
       <div class="flex justify-start">
         <a href="/" class="flex items-center">
           <span class="text-2xl font-bold text-gray-900 dark:text-gray-100"
@@ -21,10 +20,8 @@ const { class: className } = Astro.props;
         </a>
       </div>
 
-      <!-- Center navigation -->
       <div class="flex items-center justify-center gap-6"></div>
 
-      <!-- Docs button (right) -->
       <div class="flex justify-end gap-6 items-center">
         <span
           class="px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-400 dark:border-gray-600 rounded-full"

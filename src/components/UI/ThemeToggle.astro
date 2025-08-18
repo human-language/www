@@ -1,5 +1,5 @@
 ---
-import Icon from "@components/Icons.astro";
+
 ---
 
 <button
@@ -8,9 +8,7 @@ import Icon from "@components/Icons.astro";
   aria-label="Toggle theme"
   data-theme-toggle
 >
-  <span class="theme-icon-wrapper" style="padding-top: 4px;">
-    <!-- Icon will be dynamically inserted via JavaScript -->
-  </span>
+  <span class="theme-icon-wrapper" style="padding-top: 4px;"> </span>
 </button>
 
 <script>
@@ -21,7 +19,6 @@ import Icon from "@components/Icons.astro";
     const iconWrapper = toggle.querySelector(".theme-icon-wrapper");
     if (!iconWrapper) return;
 
-    // SVG templates for icons
     const sunSVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="4" />
       <path d="M12 2v2" />
@@ -48,10 +45,8 @@ import Icon from "@components/Icons.astro";
       );
     }
 
-    // Set initial icon
     updateIcon();
 
-    // Handle click
     toggle.addEventListener("click", () => {
       const isDark = document.documentElement.classList.contains("dark");
       const newTheme = isDark ? "light" : "dark";
@@ -67,7 +62,6 @@ import Icon from "@components/Icons.astro";
       );
     });
 
-    // Listen for theme changes from other sources
     window.addEventListener("theme-change", updateIcon);
   }
 

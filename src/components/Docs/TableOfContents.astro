@@ -9,7 +9,6 @@ export interface Props {
 
 const { headings = [] } = Astro.props;
 
-// Filter to only show main headers (depth 2)
 const mainHeadings = headings.filter((h) => h.depth === 2);
 ---
 
@@ -44,11 +43,9 @@ const mainHeadings = headings.filter((h) => h.depth === 2);
 </nav>
 
 <script>
-  // Only run if there are headings to track
   const tocLinks = document.querySelectorAll(".toc-link");
 
   if (tocLinks.length > 0) {
-    // Get all heading elements
     const headings = Array.from(tocLinks)
       .map((link) => {
         const slug = link.getAttribute("data-slug");
@@ -57,15 +54,12 @@ const mainHeadings = headings.filter((h) => h.depth === 2);
       })
       .filter((item) => item.element);
 
-    // Function to update active state
     function updateActiveHeading() {
-      // Get current scroll position
       const scrollY = window.scrollY;
-      const scrollOffset = 100; // Offset for better UX
+      const scrollOffset = 100;
 
       let activeHeading = null;
 
-      // Find the current active heading
       for (let i = headings.length - 1; i >= 0; i--) {
         const heading = headings[i];
         if (heading.element) {
@@ -79,12 +73,10 @@ const mainHeadings = headings.filter((h) => h.depth === 2);
         }
       }
 
-      // If no heading is active but we're at the top, activate the first one
       if (!activeHeading && scrollY < 200) {
         activeHeading = headings[0];
       }
 
-      // Update classes
       headings.forEach((heading) => {
         if (heading === activeHeading) {
           heading.link.classList.add(
@@ -106,7 +98,6 @@ const mainHeadings = headings.filter((h) => h.depth === 2);
       });
     }
 
-    // Add smooth scrolling to TOC links
     tocLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -114,7 +105,7 @@ const mainHeadings = headings.filter((h) => h.depth === 2);
         const target = document.getElementById(slug!);
 
         if (target) {
-          const offset = 80; // Offset for fixed header
+          const offset = 80;
           const elementPosition = target.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.scrollY - offset;
 
@@ -126,7 +117,6 @@ const mainHeadings = headings.filter((h) => h.depth === 2);
       });
     });
 
-    // Update on scroll with throttling
     let ticking = false;
     function scrollHandler() {
       if (!ticking) {
@@ -138,10 +128,8 @@ const mainHeadings = headings.filter((h) => h.depth === 2);
       }
     }
 
-    // Add scroll listener
     window.addEventListener("scroll", scrollHandler);
 
-    // Initial update
     updateActiveHeading();
   }
 </script>

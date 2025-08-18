@@ -1,0 +1,100 @@
+---
+import { parseDocsStructure, sortSections } from "@utils/docsNavigation";
+
+export interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const docModules = import.meta.glob("../../pages/docs/**/*.{md,mdx}", {
+  eager: true,
+});
+
+const sections = parseDocsStructure(docModules);
+const sortedSections = sortSections(sections);
+
+const allDocs = sortedSections.flatMap(([_, items]) => items);
+
+const currentIndex = allDocs.findIndex(
+  (doc) => doc.url.replace(/\/$/, "") === currentPath.replace(/\/$/, "")
+);
+
+const prevDoc = currentIndex > 0 ? allDocs[currentIndex - 1] : null;
+const nextDoc =
+  currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
+---
+
+{
+  (prevDoc || nextDoc) && (
+    <nav class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <div class="flex justify-between items-center gap-4">
+        <div class="flex-1">
+          {prevDoc ? (
+            <a
+              href={prevDoc.url}
+              class="group flex items-center gap-3 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all hover:shadow-sm"
+            >
+              <svg
+                class="w-5 h-5 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <div class="text-left">
+                <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                  Previous
+                </div>
+                <div class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                  {prevDoc.title}
+                </div>
+              </div>
+            </a>
+          ) : (
+            <div />
+          )}
+        </div>
+
+        <div class="flex-1">
+          {nextDoc ? (
+            <a
+              href={nextDoc.url}
+              class="group flex items-center justify-end gap-3 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all hover:shadow-sm text-right"
+            >
+              <div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                  Next
+                </div>
+                <div class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                  {nextDoc.title}
+                </div>
+              </div>
+              <svg
+                class="w-5 h-5 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          ) : (
+            <div />
+          )}
+        </div>
+      </div>
+    </nav>
+  )
+}

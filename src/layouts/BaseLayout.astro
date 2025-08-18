@@ -56,14 +56,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Robots -->
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- No View Transitions for instant navigation -->
-
-    <!-- Critical inline scripts -->
     <script is:inline>
-      // Remove no-js class
       document.documentElement.classList.remove("no-js");
 
-      // Theme initialization - prevents FOUC
       (function () {
         const theme =
           localStorage.getItem("theme") ||
@@ -77,21 +72,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           document.documentElement.classList.remove("dark");
         }
 
-        // Update theme color meta tag
         const meta = document.querySelector('meta[name="theme-color"]');
         if (meta) {
           meta.content = theme === "dark" ? "#030713" : "#ffffff";
         }
       })();
 
-      // Prevent FOUC
       document.documentElement.style.visibility = "visible";
     </script>
 
-    <!-- Preload critical resources -->
     <link rel="modulepreload" href="/_astro/hoisted.js" />
 
-    <!-- Preload fonts -->
     <link
       rel="preload"
       href="/fonts/EBGaramond-Italic-VariableFont_wght.ttf"

@@ -30,6 +30,7 @@ export default [
       'test',
       'eslint.config.mjs',
       'rollup.config.ts',
+      '.astro/content.d.ts',
     ],
   },
 
@@ -64,7 +65,6 @@ export default [
       'components/**/*.tsx',
       'pages/**/*.ts',
       'pages/**/*.tsx',
-      '**/*.d.ts',
     ],
     languageOptions: {
       parser: tsParser,
