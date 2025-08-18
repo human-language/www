@@ -15,14 +15,11 @@ export interface DocSection {
 
 // Define the section order
 export const SECTION_ORDER = [
-  "Overview",
-  "Lang",
   "Getting Started",
   "Guide",
+  "Reference",
   "Examples",
   "Cookbook",
-  "Reference",
-  "Constraints",
 ]
 
 /**
@@ -57,17 +54,19 @@ export function parseDocsStructure(docModules: Record<string, any>): Map<string,
   Object.entries(docModules).forEach(([ filePath, mod ]) => {
     const url = getUrlFromPath(filePath)
     
-    // Skip the main docs index and any root-level markdown files
-    if (url === "/docs" || url === "/docs/") return
-    
     // Extract section name from URL
     const pathParts = url.split("/").filter(Boolean)
     
-    // Ensure we only process files in subdirectories (not root-level docs)
-    // pathParts should be at least ["docs", "section"] for valid subdirectory files
-    if (pathParts.length < 2) return
-
-    const sectionName = decodeURIComponent(pathParts[1])
+    // Skip if not in docs folder
+    if (pathParts.length < 1 || pathParts[0] !== "docs") return
+    
+    // Determine section: either a subdirectory or "Getting Started" for root files
+    let sectionName = "Getting Started"
+    if (pathParts.length > 2) {
+      // File is in a subdirectory like /docs/guide/something.md
+      sectionName = decodeURIComponent(pathParts[1])
+    }
+    
     const formattedSection = formatTitle(sectionName)
 
     if (!sections.has(formattedSection)) {
