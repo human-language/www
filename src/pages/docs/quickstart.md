@@ -15,7 +15,7 @@ Create a file called `assistant.hmn`:
 
 ```human
 AGENT assistant
-  model = "gpt-4"
+  model = "GPT-X"
   temperature = 0.7
 ```
 
@@ -27,7 +27,7 @@ Agents need rules. Update your file:
 
 ```human
 AGENT assistant
-  model = "gpt-4"
+  model = "GPT-X"
   temperature = 0.7
 
 CONSTRAINTS behavior
@@ -40,13 +40,13 @@ CONSTRAINTS behavior
 
 Your agent now follows these rules automatically.
 
-## Minute 3: Test It
+## Test It
 
 Add tests to verify behavior:
 
 ```human
 AGENT assistant
-  model = "gpt-4"
+  model = "GPT-X"
   temperature = 0.7
 
 CONSTRAINTS behavior
@@ -74,7 +74,7 @@ Let's make a code reviewer:
 ```human
 # code_reviewer.hmn
 AGENT code_reviewer
-  model = "gpt-4"
+  model = "GPT-X"
   temperature = 0.3
   system = "You are an expert code reviewer"
 
@@ -125,7 +125,7 @@ EXPORT CONSTRAINTS safety_core
 IMPORT "../base/safety.hmn"
 
 AGENT production
-  model = "gpt-4"
+  model = "GPT-X"
 
 CONSTRAINTS production_rules
   IMPORT safety_core

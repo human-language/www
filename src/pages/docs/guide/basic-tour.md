@@ -62,7 +62,7 @@ Human uses two syntax elements:
 
 **Assignment with =**
 ```human
-model = "gpt-4"
+model = "GPT-X"
 temperature = 0.7
 ```
 
@@ -79,7 +79,7 @@ No brackets. No commas. No semicolons.
 
 ```human
 AGENT assistant
-  model = "gpt-4"
+  model = "GPT-X"
   temperature = 0.7
   max_tokens = 1000
   system = "You are helpful"
@@ -152,7 +152,7 @@ EXPORT CONSTRAINTS safety
 IMPORT "./safety.hmn"
 
 AGENT production
-  model = "gpt-4"
+  model = "GPT-X"
 
 CONSTRAINTS rules
   IMPORT safety
@@ -169,7 +169,7 @@ IMPORT "./company-policy.hmn" AS policy
 
 # Configure the agent
 AGENT customer_service
-  model = "gpt-4"
+  model = "GPT-X"
   temperature = 0.6
   system = "You are a helpful support agent"
 
@@ -370,14 +370,3 @@ IMPORT "./file.hmn" AS name
 EXPORT TYPE name
 ```
 
-## Next Steps
-
-Now you know the whole language. To go deeper:
-
-**[Constraints Guide](constraints.md)** - Master the five levels  
-**[Testing Guide](testing.md)** - Write bulletproof tests  
-**[Modules Guide](modules.md)** - Organize large projects  
-**[Flows Guide](flows.md)** - Build pipelines  
-**[Best Practices](best-practices.md)** - Production patterns
-
-*14 keywords. 5 levels. Infinite possibilities.*

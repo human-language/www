@@ -21,7 +21,7 @@ Human is a plain-text configuration format. You can write it in:
 ```human
 # This is valid Human, written anywhere
 AGENT helper
-  model = "gpt-4"
+  model = "GPT-X"
   
 CONSTRAINTS rules
   NEVER lie

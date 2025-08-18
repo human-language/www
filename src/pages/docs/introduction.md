@@ -7,11 +7,11 @@ order: 1
 
 # What is Human?
 
-Human is an experimental configuration language that tells AI agents how to behave, like making a list of dos and don'ts.
+Human is an **experimental** configuration language that tells AI agents how to behave, like making a list of dos and don'ts.
 
 ```human
 AGENT assistant
-  model = "gpt-4"
+  model = "GPT-X"
   temperature = 0.7
 
 CONSTRAINTS behavior
@@ -61,7 +61,7 @@ Instead of 500 lines of code, you write:
 
 ```human
 AGENT support
-  model = "gpt-4"
+  model = "GPT-X"
   temperature = 0.7
 
 CONSTRAINTS policy
