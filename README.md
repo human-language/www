@@ -1,43 +1,53 @@
-# Astro Starter Kit: Minimal
+# Human Language Documentation
 
-```sh
-npm create astro@latest -- --template minimal
+Documentation site for the Human configuration language - a simple, readable way to control AI behavior.
+
+## What is Human?
+
+Human is an experimental configuration language that tells AI agents how to behave using constraint levels (NEVER, MUST, SHOULD, AVOID, MAY). No frameworks, no APIs - just text.
+
+## Stack
+
+- **Framework**: Astro (static site generator)
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
+- **Language**: TypeScript
+
+## Quick Start
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start dev server
+pnpm dev
+
+# Build for production
+pnpm build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Project Structure
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+src/
+├── pages/docs/          # Documentation markdown files
+├── components/          # Reusable UI components
+├── layouts/            # Page layouts
+└── styles/             # Global CSS and Tailwind config
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Development
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- Documentation is written in Markdown with frontmatter
+- Uses custom DocsLayout for consistent styling
+- Automatic table of contents generation
+- Dark/light theme support
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Deployment
 
-## 🧞 Commands
+Site is automatically deployed to Vercel on push to main branch.
 
-All commands are run from the root of the project, from a terminal:
+## Links
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Live Site**: https://human-lang.com
+- **Language Repo**: https://github.com/human-language

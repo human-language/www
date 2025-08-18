@@ -44,8 +44,6 @@ Human gives you five levels of control, borrowed from the same RFC that runs the
 **AVOID** - Discouraged. The AI will minimize these behaviors.  
 **MAY** - Permissions. Explicitly allowed actions.
 
-These aren't suggestions. They're enforced at runtime.
-
 ## Why It Matters
 
 With Human, AI behavior becomes:
