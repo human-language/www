@@ -15,30 +15,12 @@ const docModules = import.meta.glob("../../pages/docs/**/*.{md,mdx}", {
 // Parse and sort the documentation structure
 const sections = parseDocsStructure(docModules);
 const sortedSections = sortSections(sections);
+
+// Normalize path for comparison (remove trailing slash if present)
+const normalizedPath = currentPath.replace(/\/$/, "");
 ---
 
 <nav class="docs-sidebar">
-  <!-- Overview Section -->
-  <div class="mb-6">
-    <h2 class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-100">
-      Overview
-    </h2>
-    <ul class="space-y-0.5">
-      <li>
-        <a
-          href="/docs"
-          class={`block rounded-md px-3 py-1.5 text-sm transition-colors ${
-            currentPath === "/docs" || currentPath === "/docs/"
-              ? "bg-blue-50 text-blue-700 font-medium dark:bg-blue-950/30 dark:text-blue-400"
-              : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-800/50"
-          }`}
-        >
-          Getting started
-        </a>
-      </li>
-    </ul>
-  </div>
-
   <!-- Dynamic Sections -->
   {
     sortedSections.map(([sectionName, items]) => (
@@ -46,15 +28,16 @@ const sortedSections = sortSections(sections);
         <h3 class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-100">
           {sectionName}
         </h3>
-        <ul class="space-y-0.5">
+        <ul class="space-y-1">
           {items.map((item) => {
-            const isActive =
-              currentPath === item.url || currentPath === `${item.url}/`;
+            // Normalize item URL for comparison
+            const normalizedItemUrl = item.url.replace(/\/$/, "");
+            const isActive = normalizedPath === normalizedItemUrl;
             return (
               <li>
                 <a
                   href={item.url}
-                  class={`block rounded-md px-3 py-1.5 text-sm transition-colors ${
+                  class={`block rounded-md px-2 py-1.5 text-sm transition-all ${
                     isActive
                       ? "bg-blue-50 text-blue-700 font-medium dark:bg-blue-950/30 dark:text-blue-400"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-800/50"

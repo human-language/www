@@ -8,9 +8,12 @@ export interface Props {
 }
 
 const { headings = [] } = Astro.props;
+
+// Filter to only show main headers (depth 2)
+const mainHeadings = headings.filter((h) => h.depth === 2);
 ---
 
-<nav class="table-of-contents">
+<nav class="table-of-contents" id="toc-nav">
   <h3
     class="text-xs font-semibold uppercase tracking-wider text-gray-900 dark:text-gray-100 mb-4"
   >
@@ -18,20 +21,14 @@ const { headings = [] } = Astro.props;
   </h3>
 
   {
-    headings.length > 0 ? (
-      <ul class="space-y-2.5 text-sm">
-        {headings.map((heading) => (
+    mainHeadings.length > 0 ? (
+      <ul class="space-y-1 text-sm" id="toc-list">
+        {mainHeadings.map((heading, index) => (
           <li>
             <a
               href={`#${heading.slug}`}
-              class={`
-              block py-1 leading-relaxed transition-colors
-              ${
-                heading.depth === 2
-                  ? "text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 font-medium"
-                  : "text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 pl-4"
-              }
-            `}
+              data-slug={heading.slug}
+              class="toc-link block py-1.5 px-2 -mx-2 rounded-md leading-relaxed text-gray-600 dark:text-gray-400 font-medium transition-all hover:text-gray-900 dark:hover:text-gray-100"
             >
               {heading.text}
             </a>
@@ -45,3 +42,106 @@ const { headings = [] } = Astro.props;
     )
   }
 </nav>
+
+<script>
+  // Only run if there are headings to track
+  const tocLinks = document.querySelectorAll(".toc-link");
+
+  if (tocLinks.length > 0) {
+    // Get all heading elements
+    const headings = Array.from(tocLinks)
+      .map((link) => {
+        const slug = link.getAttribute("data-slug");
+        const element = document.getElementById(slug!);
+        return { link, element, slug };
+      })
+      .filter((item) => item.element);
+
+    // Function to update active state
+    function updateActiveHeading() {
+      // Get current scroll position
+      const scrollY = window.scrollY;
+      const scrollOffset = 100; // Offset for better UX
+
+      let activeHeading = null;
+
+      // Find the current active heading
+      for (let i = headings.length - 1; i >= 0; i--) {
+        const heading = headings[i];
+        if (heading.element) {
+          const rect = heading.element.getBoundingClientRect();
+          const absoluteTop = rect.top + scrollY;
+
+          if (scrollY >= absoluteTop - scrollOffset) {
+            activeHeading = heading;
+            break;
+          }
+        }
+      }
+
+      // If no heading is active but we're at the top, activate the first one
+      if (!activeHeading && scrollY < 200) {
+        activeHeading = headings[0];
+      }
+
+      // Update classes
+      headings.forEach((heading) => {
+        if (heading === activeHeading) {
+          heading.link.classList.add(
+            "text-blue-700",
+            "dark:text-blue-400",
+            "bg-blue-50",
+            "dark:bg-blue-950/30"
+          );
+          heading.link.classList.remove("text-gray-600", "dark:text-gray-400");
+        } else {
+          heading.link.classList.remove(
+            "text-blue-700",
+            "dark:text-blue-400",
+            "bg-blue-50",
+            "dark:bg-blue-950/30"
+          );
+          heading.link.classList.add("text-gray-600", "dark:text-gray-400");
+        }
+      });
+    }
+
+    // Add smooth scrolling to TOC links
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const slug = link.getAttribute("data-slug");
+        const target = document.getElementById(slug!);
+
+        if (target) {
+          const offset = 80; // Offset for fixed header
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      });
+    });
+
+    // Update on scroll with throttling
+    let ticking = false;
+    function scrollHandler() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveHeading();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    // Add scroll listener
+    window.addEventListener("scroll", scrollHandler);
+
+    // Initial update
+    updateActiveHeading();
+  }
+</script>
