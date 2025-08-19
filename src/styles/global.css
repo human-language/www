@@ -100,6 +100,54 @@
     will-change: transform;
   }
 
+  /* Code block wrapper for copy button positioning */
+  .code-block-wrapper {
+    @apply relative;
+  }
+
+  /* Copy button styles */
+  .copy-button {
+    @apply absolute top-2 right-2;
+    @apply p-2 rounded-md;
+    @apply bg-gray-800 dark:bg-gray-700;
+    @apply text-gray-300 dark:text-gray-400;
+    @apply hover:bg-gray-700 dark:hover:bg-gray-600;
+    @apply hover:text-white dark:hover:text-white;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950;
+    @apply opacity-0 group-hover:opacity-100;
+    @apply z-10;
+  }
+
+  /* Show copy button on hover for code blocks */
+  .code-block-wrapper:hover .copy-button {
+    @apply opacity-100;
+  }
+
+  /* Icon states */
+  .copy-button .copy-icon {
+    @apply transition-opacity duration-200;
+  }
+
+  .copy-button .check-icon {
+    @apply absolute inset-0 m-auto opacity-0 transition-opacity duration-200;
+    @apply text-green-400;
+  }
+
+  /* Copied state */
+  .copy-button.copied .copy-icon {
+    @apply opacity-0;
+  }
+
+  .copy-button.copied .check-icon {
+    @apply opacity-100;
+  }
+
+  /* Ensure code blocks have proper spacing for button */
+  .code-block-wrapper pre {
+    @apply pr-12;
+  }
+
   code {
     @apply text-sm;
     font-family: 'Fira Code', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;

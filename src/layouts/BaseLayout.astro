@@ -94,6 +94,99 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Performance hints -->
     <meta name="color-scheme" content="light dark" />
     <meta name="supported-color-schemes" content="light dark" />
+
+    <!-- Copy code blocks script -->
+    <script is:inline>
+      // Auto-enhance code blocks with copy functionality
+      function enhanceCodeBlocks() {
+        const codeBlocks = document.querySelectorAll("pre code");
+
+        codeBlocks.forEach((codeElement) => {
+          const preElement = codeElement.parentElement;
+
+          // Skip if already enhanced
+          if (
+            preElement.parentElement?.classList.contains("code-block-wrapper")
+          ) {
+            return;
+          }
+
+          // Create wrapper
+          const wrapper = document.createElement("div");
+          wrapper.className = "code-block-wrapper relative group";
+
+          // Move the pre element into the wrapper
+          preElement.parentNode.insertBefore(wrapper, preElement);
+          wrapper.appendChild(preElement);
+
+          // Add copy button
+          const copyButton = document.createElement("button");
+          copyButton.className = "copy-button";
+          copyButton.setAttribute("data-code", codeElement.textContent || "");
+          copyButton.setAttribute("aria-label", "Copy code to clipboard");
+          copyButton.setAttribute("title", "Copy code");
+
+          // Add icons
+          copyButton.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-icon" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+          `;
+
+          // Add click handler
+          copyButton.addEventListener("click", async (e) => {
+            e.preventDefault();
+            const code = copyButton.getAttribute("data-code");
+            if (!code) return;
+
+            try {
+              await navigator.clipboard.writeText(code);
+
+              // Visual feedback
+              copyButton.classList.add("copied");
+
+              // Reset after 2 seconds
+              setTimeout(() => {
+                copyButton.classList.remove("copied");
+              }, 2000);
+            } catch (err) {
+              // Fallback for older browsers
+              const textArea = document.createElement("textarea");
+              textArea.value = code;
+              document.body.appendChild(textArea);
+              textArea.select();
+              document.execCommand("copy");
+              document.body.removeChild(textArea);
+
+              // Visual feedback for fallback
+              copyButton.classList.add("copied");
+              setTimeout(() => {
+                copyButton.classList.remove("copied");
+              }, 2000);
+            }
+          });
+
+          wrapper.appendChild(copyButton);
+        });
+      }
+
+      // Initialize on page load
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", enhanceCodeBlocks);
+      } else {
+        enhanceCodeBlocks();
+      }
+
+      // Re-initialize for dynamic content (Astro islands)
+      document.addEventListener("astro:page-load", enhanceCodeBlocks);
+
+      // Also run after a short delay to catch any late-rendered content
+      setTimeout(enhanceCodeBlocks, 100);
+    </script>
   </head>
   <body class="min-h-screen flex flex-col" data-instant-intensity="viewport">
     <slot />
