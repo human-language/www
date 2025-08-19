@@ -26,6 +26,7 @@ AGENT helper
 CONSTRAINTS rules
   NEVER lie
   MUST help
+
 ```
 
 Save it as `.hmn` file. That's it. You've "installed" Human.
