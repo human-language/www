@@ -11,15 +11,11 @@ In teaching machines to think, we discover the shape of human thought itself.
 
 ## Why Human Exists
 
-We built Human because AI configuration shouldn't require a PhD in prompt engineering.
+i built Human because AI configuration shouldn't require a PhD in prompt engineering.
 
 Every day, millions of developers write the same safety rules, the same retry logic, the same prompt templates. They build frameworks on frameworks to control something that should be simple: telling an AI what to do and what not to do.
 
 Human says: what if configuration was just configuration?
-
-## The Unix Way
-
-Human follows the Unix philosophy from Bell Labs:
 
 **Write programs that do one thing well.**  
 Human does one thing: configure AI behavior.
@@ -44,24 +40,6 @@ Human embodies this minimalism:
 - **600 lines of code** - You could read the entire implementation in an hour.
 
 This isn't minimalism for its own sake. It's minimalism for clarity. When you read a Human file, you understand it immediately. No abstraction layers. No mental compilation. Just clear intent.
-
-## The Bell Labs Influence
-
-At Bell Labs, they built tools that lasted decades. Why? They focused on the essential.
-
-Plan 9's configuration files were plain text. The Bourne shell used simple commands. AWK had a tiny syntax. These tools survived because they did one thing perfectly.
-
-Human learns from this tradition:
-
-```human
-# This is more readable than 500 lines of Python
-CONSTRAINTS production
-  NEVER expose_secrets
-  MUST validate_input
-  SHOULD cache_results
-```
-
-Compare this to modern AI configuration: YAML files, JSON schemas, Python decorators, framework-specific DSLs. We've forgotten the power of plain text.
 
 ## Engineering Without Code
 
@@ -192,12 +170,11 @@ Human stands on the shoulders of:
 
 - **RFC 2119** - The five levels come directly from IETF standards
 - **Unix Philosophy** - Small, composable, text-based tools
-- **Plan 9** - Everything is a file, including configuration
 - **Make** - Declarative rules that define behavior
 - **.gitignore** - Simple patterns that shape complex behavior
 - **robots.txt** - Plain text rules that machines respect
 
-We didn't invent these ideas. We just applied them to AI.
+I didn't invent these ideas. I just applied them to AI.
 
 ## Why Not [Alternative]?
 
@@ -216,9 +193,9 @@ Natural language is ambiguous. "Should probably not" - is that SHOULD NOT or AVO
 **Why not use existing config languages?**  
 They weren't designed for behavioral constraints. We needed exactly five levels, not arbitrary key-value pairs.
 
-## The Bet We're Making
+## The Bet
 
-We're betting that:
+I am betting that:
 
 1. AI configuration will become as important as code
 2. Plain text will outlive every framework
@@ -226,9 +203,9 @@ We're betting that:
 4. Unix philosophy applies to AI tools
 5. Engineers want tools, not frameworks
 
-If we're right, Human becomes the `.gitignore` of AI—so obvious that we forget someone had to invent it.
+If I am right, Human becomes the `.gitignore` of AI—so obvious that we forget someone had to invent it.
 
-If we're wrong, we've still created something useful: a clear way to think about AI behavior.
+If I am wrong, I still created something useful: a clear way to think about AI behavior.
 
 ## Open Questions
 
@@ -253,13 +230,13 @@ This is engineering. Not the syntax, but the thinking.
 
 ## In Conclusion
 
-Human is an experiment in minimalism. Can we configure complex AI behavior with just 14 keywords? Can we make safety rules as simple as a shopping list? Can we build something that lasts?
+ Can we configure complex AI behavior with just 14 keywords? Can we make safety rules as simple as a shopping list? Can we build something that lasts?
 
-We think so.
+I think so.
 
 The best tools are invisible. You don't think about `grep` or `make` or `.gitignore`—you just use them. They fade into the background, becoming part of how you think.
 
-That's what we want Human to be: invisible infrastructure for the AI age.
+That's what I want Human to be: invisible infrastructure for the AI age.
 
 Simple. Composable. Obvious in retrospect.
 

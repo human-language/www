@@ -7,7 +7,7 @@ order: 1
 
 # What is Human?
 
-Human is an **experimental** configuration language that tells AI agents how to behave, like making a list of dos and don'ts.
+Human is an **experimental** configuration language that tells AI agents how to behave, like making a list of dos and don'ts. 
 
 ```human
 AGENT assistant
