@@ -22,26 +22,26 @@ const currentPath = Astro.url.pathname;
 <BaseLayout title={`${title} | Documentation`} description={description}>
   <Header />
 
-  <!-- 3-column documentation layout -->
+  <!-- Mobile-first responsive documentation layout -->
   <div class="flex-1 w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Sidebar Column -->
-        <aside class="lg:col-span-2">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <!-- Sidebar Column - Hidden on mobile, visible on tablet+ -->
+        <aside class="hidden md:block md:col-span-3 lg:col-span-2">
           <div class="sticky top-8">
             <DocsSidebar currentPath={currentPath} />
           </div>
         </aside>
 
         <!-- Main Content Column -->
-        <main class="lg:col-span-8">
+        <main class="md:col-span-9 lg:col-span-8">
           <Document title={title} description={description}>
             <slot />
           </Document>
         </main>
 
-        <!-- Table of Contents Column -->
-        <aside class="lg:col-span-2">
+        <!-- Table of Contents Column - Hidden on mobile/tablet, visible on desktop -->
+        <aside class="hidden lg:block lg:col-span-2">
           <div class="sticky top-8">
             <TableOfContents headings={headings} />
           </div>
@@ -49,4 +49,254 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
   </div>
+
+  <!-- Mobile Navigation Buttons -->
+  <div class="fixed bottom-6 left-4 md:hidden z-40">
+    <button
+      id="mobile-sidebar-button"
+      class="flex items-center gap-2 px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+      aria-label="Open navigation menu"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <span class="text-sm font-medium">Menu</span>
+    </button>
+  </div>
+
+  <div class="fixed bottom-6 right-4 md:hidden z-40">
+    <button
+      id="mobile-toc-button"
+      class="flex items-center gap-2 px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+      aria-label="Open table of contents"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+      <span class="text-sm font-medium">Contents</span>
+    </button>
+  </div>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div
+    id="mobile-sidebar-overlay"
+    class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm md:hidden hidden"
+  >
+    <div
+      class="fixed inset-y-0 left-0 w-full max-w-sm bg-white dark:bg-gray-900 shadow-xl"
+    >
+      <div
+        class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700"
+      >
+        <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Navigation
+        </span>
+        <button
+          id="mobile-sidebar-close"
+          class="p-2 rounded-md text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Close navigation menu"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-4 overflow-y-auto h-full">
+        <DocsSidebar currentPath={currentPath} />
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Table of Contents Overlay -->
+  <div
+    id="mobile-toc-overlay"
+    class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm md:hidden hidden"
+  >
+    <div
+      class="fixed inset-y-0 right-0 w-full max-w-sm bg-white dark:bg-gray-900 shadow-xl"
+    >
+      <div
+        class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700"
+      >
+        <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Table of Contents
+        </span>
+        <button
+          id="mobile-toc-close"
+          class="p-2 rounded-md text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Close table of contents"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-4 overflow-y-auto h-full">
+        <TableOfContents headings={headings} />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function initMobileDocsNavigation() {
+      // Sidebar controls
+      const sidebarButton = document.getElementById("mobile-sidebar-button");
+      const sidebarOverlay = document.getElementById("mobile-sidebar-overlay");
+      const sidebarClose = document.getElementById("mobile-sidebar-close");
+
+      // Table of Contents controls
+      const tocButton = document.getElementById("mobile-toc-button");
+      const tocOverlay = document.getElementById("mobile-toc-overlay");
+      const tocClose = document.getElementById("mobile-toc-close");
+
+      if (sidebarButton && sidebarOverlay && sidebarClose) {
+        function openSidebar() {
+          if (sidebarOverlay) {
+            sidebarOverlay.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+          }
+        }
+
+        function closeSidebar() {
+          if (sidebarOverlay) {
+            sidebarOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+          }
+        }
+
+        sidebarButton.addEventListener("click", openSidebar);
+        sidebarClose.addEventListener("click", closeSidebar);
+
+        // Close on overlay click
+        sidebarOverlay.addEventListener("click", (e) => {
+          if (e.target === sidebarOverlay) {
+            closeSidebar();
+          }
+        });
+      }
+
+      if (tocButton && tocOverlay && tocClose) {
+        function openToc() {
+          if (tocOverlay) {
+            tocOverlay.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+          }
+        }
+
+        function closeToc() {
+          if (tocOverlay) {
+            tocOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+          }
+        }
+
+        tocButton.addEventListener("click", openToc);
+        tocClose.addEventListener("click", closeToc);
+
+        // Close on overlay click
+        tocOverlay.addEventListener("click", (e) => {
+          if (e.target === tocOverlay) {
+            closeToc();
+          }
+        });
+      }
+
+      // Close overlays on escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          if (sidebarOverlay && !sidebarOverlay.classList.contains("hidden")) {
+            sidebarOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+          }
+          if (tocOverlay && !tocOverlay.classList.contains("hidden")) {
+            tocOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+          }
+        }
+      });
+
+      // Auto-close overlays when clicking sidebar/toc links
+      const sidebarLinks = sidebarOverlay?.querySelectorAll("a");
+      const tocLinks = tocOverlay?.querySelectorAll("a");
+
+      sidebarLinks?.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (sidebarOverlay) {
+            sidebarOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+          }
+        });
+      });
+
+      tocLinks?.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (tocOverlay) {
+            tocOverlay.classList.add("hidden");
+            document.body.style.overflow = "";
+          }
+        });
+      });
+    }
+
+    // Initialize on page load
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initMobileDocsNavigation);
+    } else {
+      initMobileDocsNavigation();
+    }
+
+    // Re-initialize after Astro page transitions
+    document.addEventListener("astro:page-load", initMobileDocsNavigation);
+  </script>
 </BaseLayout>

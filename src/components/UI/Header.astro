@@ -11,18 +11,18 @@ const { class: className } = Astro.props;
 
 <header class={`w-full pt-2.5 ${className || ""}`} transition:persist>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <nav class="grid grid-cols-3 items-center h-16">
-      <div class="flex justify-start">
+    <nav class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
         <a href="/" class="flex items-center">
-          <span class="text-2xl font-bold text-gray-900 dark:text-gray-100"
-            >Human</span
-          >
+          <span class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+            Human
+          </span>
         </a>
       </div>
 
-      <div class="flex items-center justify-center gap-6"></div>
-
-      <div class="flex justify-end gap-6 items-center">
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-6">
         <span
           class="px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-400 dark:border-gray-600 rounded-full"
         >
@@ -49,6 +49,124 @@ const { class: className } = Astro.props;
         </a>
         <ThemeToggle />
       </div>
+
+      <!-- Mobile Navigation -->
+      <div class="md:hidden flex items-center gap-2">
+        <ThemeToggle />
+        <button
+          id="mobile-menu-button"
+          class="p-2 rounded-md text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Open menu"
+        >
+          <Icon name="Menu" size={24} />
+        </button>
+      </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm md:hidden hidden"
+    >
+      <div
+        class="fixed inset-y-0 right-0 w-full max-w-sm bg-white dark:bg-gray-900 shadow-xl"
+      >
+        <div
+          class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700"
+        >
+          <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Menu
+          </span>
+          <button
+            id="mobile-menu-close"
+            class="p-2 rounded-md text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            aria-label="Close menu"
+          >
+            <Icon name="X" size={24} />
+          </button>
+        </div>
+
+        <nav class="p-4 space-y-4">
+          <div class="flex items-center justify-center mb-6">
+            <span
+              class="px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 border border-gray-400 dark:border-gray-600 rounded-full"
+            >
+              v0.1.0-alpha
+            </span>
+          </div>
+
+          <a
+            href="/about"
+            class="block px-4 py-3 rounded-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            About
+          </a>
+          <a
+            href="/community"
+            class="block px-4 py-3 rounded-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            Community
+          </a>
+          <a
+            href="https://github.com/human-language"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <Icon name="Github" size={20} />
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </div>
   </div>
 </header>
+
+<script>
+  function initMobileMenu() {
+    const menuButton = document.getElementById("mobile-menu-button");
+    const closeButton = document.getElementById("mobile-menu-close");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (!menuButton || !closeButton || !mobileMenu) return;
+
+    function openMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+    }
+
+    function closeMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+    }
+
+    menuButton.addEventListener("click", openMenu);
+    closeButton.addEventListener("click", closeMenu);
+
+    // Close on overlay click
+    mobileMenu.addEventListener("click", (e) => {
+      if (e.target === mobileMenu) {
+        closeMenu();
+      }
+    });
+
+    // Close on escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !mobileMenu.classList.contains("hidden")) {
+        closeMenu();
+      }
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMobileMenu);
+  } else {
+    initMobileMenu();
+  }
+
+  // Re-initialize after Astro page transitions
+  document.addEventListener("astro:page-load", initMobileMenu);
+</script>

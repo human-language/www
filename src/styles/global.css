@@ -103,6 +103,24 @@
     contain: layout style paint;
     /* GPU acceleration for smooth scrolling */
     will-change: transform;
+    /* Mobile-specific improvements */
+    -webkit-overflow-scrolling: touch;
+    /* Ensure minimum touch target size on mobile */
+    min-height: 44px;
+  }
+  
+  /* Mobile-optimized code blocks */
+  @media (max-width: 768px) {
+    pre {
+      @apply p-3 text-xs;
+      /* Better scrolling on mobile */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    pre::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   /* Code block wrapper for copy button positioning */
@@ -348,6 +366,41 @@
     contain: strict;
   }
   
+  /* Mobile typography optimizations */
+  @media (max-width: 640px) {
+    .docs-content h1,
+    .legal-content h1 {
+      @apply text-3xl;
+    }
+    
+    .docs-content h2,
+    .legal-content h2 {
+      @apply text-xl;
+    }
+    
+    .docs-content p,
+    .legal-content p {
+      @apply text-base leading-relaxed;
+    }
+    
+    /* Ensure proper touch targets */
+    .btn {
+      @apply min-h-[44px] px-6 py-3;
+    }
+    
+    .nav-link {
+      @apply min-h-[44px] py-3;
+    }
+  }
+  
+  /* Tablet optimizations */
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .docs-content h1,
+    .legal-content h1 {
+      @apply text-3xl;
+    }
+  }
+
   /* Reduced motion for accessibility */
   @media (prefers-reduced-motion: reduce) {
     *,
