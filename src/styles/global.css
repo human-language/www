@@ -61,13 +61,18 @@
     /* Remove smooth scroll for instant navigation */
     scroll-behavior: auto;
   }
+  
+  /* Prevent flash during View Transitions */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
 
   body {
     @apply bg-white text-gray-900 dark:bg-[#030713] dark:text-gray-100;
     @apply antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    /* Smooth theme transitions - performant with will-change */
-    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
     /* Enable font smoothing */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

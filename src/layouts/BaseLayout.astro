@@ -1,6 +1,7 @@
 ---
 import "@styles/global.css";
 import Footer from "@components/UI/Footer.astro";
+import { ViewTransitions } from "astro:transitions";
 
 export interface Props {
   title?: string;
@@ -20,12 +21,44 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <!-- View Transitions for smooth navigation -->
+    <ViewTransitions />
+
+    <!-- Apply theme immediately before any content renders -->
+    <script is:inline>
+      // Apply theme before first paint to prevent flash
+      function applyTheme() {
+        const theme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.content = theme === "dark" ? "#030713" : "#ffffff";
+        }
+      }
+
+      // Apply theme immediately
+      applyTheme();
+
+      // Persist theme across View Transitions
+      document.addEventListener("astro:after-swap", applyTheme);
+    </script>
 
     <!-- Preconnect to critical origins -->
     <link rel="preconnect" href={Astro.site} crossorigin />
@@ -55,31 +88,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Robots -->
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-
-    <script is:inline>
-      document.documentElement.classList.remove("no-js");
-
-      (function () {
-        const theme =
-          localStorage.getItem("theme") ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light");
-
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-
-        const meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) {
-          meta.content = theme === "dark" ? "#030713" : "#ffffff";
-        }
-      })();
-
-      document.documentElement.style.visibility = "visible";
-    </script>
 
     <link rel="modulepreload" href="/_astro/hoisted.js" />
 
@@ -217,11 +225,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
     </script>
 
-    <!-- Instant page prefetching -->
-    <script
-      src="//instant.page/5.2.0"
-      type="module"
-      integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
-    ></script>
+    <!-- View Transitions handle prefetching automatically -->
   </body>
 </html>

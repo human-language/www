@@ -9,7 +9,7 @@ export interface Props {
 const { class: className } = Astro.props;
 ---
 
-<header class={`w-full pt-2.5 ${className || ""}`}>
+<header class={`w-full pt-2.5 ${className || ""}`} transition:persist>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <nav class="grid grid-cols-3 items-center h-16">
       <div class="flex justify-start">
