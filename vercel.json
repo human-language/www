@@ -95,10 +95,5 @@
       "source": "/(.*)",
       "destination": "/$1"
     }
-  ],
-  "functions": {
-    "api/*": {
-      "maxDuration": 10
-    }
-  }
+  ]
 }

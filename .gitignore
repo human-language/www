@@ -32,3 +32,6 @@ pnpm-debug.log*
 
 # Todo
 TODO.md
+
+# vercel
+.vercel/
