@@ -1,0 +1,38 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+---
+<a href="/intro" class="human-logo site-title" aria-label="Human — home">
+  <span class="human-wordmark">human</span>
+  <svg class="human-heart" viewBox="0 0 28 26" fill="#c8392b" aria-hidden="true">
+    <path d="M14 24 C14 24 2 15 2 8 C2 4.5 4.8 2 8 2 C10.5 2 12.8 3.5 14 5.5 C15.2 3.5 17.5 2 20 2 C23.2 2 26 4.5 26 8 C26 15 14 24 14 24Z"/>
+  </svg>
+</a>
+
+<style>
+  .human-logo {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    text-decoration: none !important;
+    line-height: 1;
+  }
+  .human-logo:hover {
+    text-decoration: none !important;
+    opacity: 0.85;
+  }
+  .human-wordmark {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #faf7f1;
+  }
+  .human-heart {
+    width: 10px;
+    height: 9px;
+    margin-left: 2px;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+  }
+</style>

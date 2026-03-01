@@ -1,125 +1,129 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import robotsTxt from 'astro-robots';
+import starlight from '@astrojs/starlight';
 import sitemap from '@astrojs/sitemap';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL || 'https://human-lang.com',
-  output: 'static',
+  site: 'https://human-lang.org',
+  trailingSlash: 'never',
+  redirects: {
+    '/docs':                           '/intro',
+    '/docs/introduction':              '/intro',
+    '/docs/installation':              '/installation',
+    '/docs/quickstart':                '/quickstart',
+    '/docs/philosophy':                '/philosophy',
+    '/docs/guide/basic-tour':          '/guide/basic-tour',
+    '/docs/guide/first-agent':         '/guide/first-agent',
+    '/docs/guide/constraints':         '/guide/constraints',
+    '/docs/guide/flows':               '/guide/flows',
+    '/docs/guide/modules':             '/guide/modules',
+    '/docs/guide/testing':             '/guide/testing',
+    '/docs/reference/syntax':          '/reference/syntax',
+    '/docs/reference/keywords':        '/reference/keywords',
+    '/docs/reference/cli':             '/reference/cli',
+    '/docs/reference/stdlib':          '/reference/stdlib',
+    '/docs/examples/code-reviewer':    '/examples/code-reviewer',
+    '/docs/examples/creative-writer':  '/examples/creative-writer',
+    '/docs/examples/customer-service': '/examples/customer-service',
+    '/docs/examples/data-processor':   '/examples/data-processor',
+    '/docs/examples/react-todo-app':   '/examples/react-todo-app',
+  },
   build: {
-    inlineStylesheets: 'auto', // Smart inlining based on size
-    format: 'directory', // Clean URLs without .html
-    assets: '_astro' // Consistent asset naming
+    format: 'directory',
+    inlineStylesheets: 'auto',
   },
   compressHTML: true,
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'hover',
+  },
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    sitemap({
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date()
-    }),
-    robotsTxt({
-      sitemap: true,
-      policy: [
+    starlight({
+      title: 'Human',
+      defaultLocale: 'root',
+      customCss: ['./src/styles/theme.css'],
+      lastUpdated: true,
+      expressiveCode: {
+        themes: ['one-dark-pro'],
+      },
+      components: {
+        Header:    './src/components/overrides/Header.astro',
+        Head:      './src/components/overrides/Head.astro',
+        SiteTitle: './src/components/overrides/SiteTitle.astro',
+      },
+      head: [
         {
-          userAgent: '*',
-          allow: '/',
+          tag: 'link',
+          attrs: {
+            rel: 'preload',
+            href: '/fonts/FiraCode-Regular.woff2',
+            as: 'font',
+            type: 'font/woff2',
+            crossorigin: 'anonymous',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preload',
+            href: 'https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap',
+            as: 'style',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap',
+          },
+        },
+      ],
+      sidebar: [
+        {
+          label: 'Getting Started',
+          items: [
+            { label: 'Introduction', link: '/intro' },
+            { label: 'Installation', link: '/installation' },
+            { label: 'Quickstart', link: '/quickstart' },
+            { label: 'Philosophy', link: '/philosophy' },
+          ],
+        },
+        {
+          label: 'Guide',
+          items: [
+            { label: 'Basic Tour', link: '/guide/basic-tour' },
+            { label: 'Your First Agent', link: '/guide/first-agent' },
+            { label: 'Constraints', link: '/guide/constraints' },
+            { label: 'Flows', link: '/guide/flows' },
+            { label: 'Modules', link: '/guide/modules' },
+            { label: 'Testing', link: '/guide/testing' },
+          ],
+        },
+        {
+          label: 'Reference',
+          items: [
+            { label: 'Syntax', link: '/reference/syntax' },
+            { label: 'Keywords', link: '/reference/keywords' },
+            { label: 'CLI', link: '/reference/cli' },
+            { label: 'Standard Library', link: '/reference/stdlib' },
+          ],
+        },
+        {
+          label: 'Examples',
+          items: [
+            { label: 'Code Reviewer', link: '/examples/code-reviewer' },
+            { label: 'Creative Writer', link: '/examples/creative-writer' },
+            { label: 'Customer Service', link: '/examples/customer-service' },
+            { label: 'Data Processor', link: '/examples/data-processor' },
+            { label: 'React Todo App', link: '/examples/react-todo-app' },
+          ],
         },
       ],
     }),
+    sitemap(),
   ],
-  prefetch: {
-    // Smart prefetching on hover/tap
-    prefetchAll: false,
-    defaultStrategy: 'hover',
-    // Throttle prefetch requests
-    throttle: 3
-  },
   vite: {
     build: {
-      cssCodeSplit: true, // Split CSS for better caching
-      cssMinify: true, // Enable CSS minification
-      rollupOptions: {
-        output: {
-          // Manual chunks for optimal splitting
-          manualChunks: (id) => {
-            // Keep framework code separate
-            if (id.includes('node_modules')) {
-              if (id.includes('react')) return 'react';
-              if (id.includes('@astrojs')) return 'astro';
-              return 'vendor';
-            }
-          },
-          assetFileNames: (assetInfo) => {
-            // Hash assets for cache busting
-            const info = assetInfo.name.split('.');
-            const ext = info[info.length - 1];
-            if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp|avif/i.test(ext)) {
-              return `_astro/img/[name].[hash][extname]`;
-            }
-            if (/woff2?|ttf|eot|otf/i.test(ext)) {
-              return `_astro/fonts/[name].[hash][extname]`;
-            }
-            return `_astro/[name].[hash][extname]`;
-          },
-          chunkFileNames: '_astro/js/[name].[hash].js',
-          entryFileNames: '_astro/js/[name].[hash].js'
-        },
-        treeshake: {
-          // Aggressive tree shaking
-          moduleSideEffects: false,
-          propertyReadSideEffects: false,
-          tryCatchDeoptimization: false
-        }
-      },
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-          pure_funcs: ['console.log', 'console.info', 'console.debug'],
-          passes: 3
-        },
-        mangle: {
-          safari10: true
-        },
-        format: {
-          comments: false,
-          ecma: 2020
-        }
-      },
-      target: 'es2020', // Modern browsers only
-      sourcemap: false,
-      // Report compressed size
-      reportCompressedSize: false,
-      // Chunk size warnings
-      chunkSizeWarningLimit: 500
+      cssCodeSplit: true,
     },
-    // Optimize deps
-    optimizeDeps: {
-      entries: ['src/**/*.{astro,js,jsx,ts,tsx}'],
-      exclude: ['@astrojs/image', '@astrojs/mdx']
-    },
-    // Enable build optimizations
-    esbuild: {
-      legalComments: 'none',
-      treeShaking: true,
-      minifyIdentifiers: true,
-      minifySyntax: true,
-      minifyWhitespace: true
-    },
-    // Preview compression
-    preview: {
-      headers: {
-        'Cache-Control': 'public, max-age=600'
-      }
-    }
   },
-  // Image optimization is handled automatically by Astro
 });

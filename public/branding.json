@@ -1,0 +1,136 @@
+{
+    "brandbook": {
+      "name": "human-lang",
+      "version": "1.0.0",
+      "url": "human-lang.org",
+      "tagline": "a language for people",
+      "philosophy": "imago dei — the human image encoded in language"
+    },
+  
+    "logo": {
+      "wordmark": {
+        "text": "human",
+        "font_family": "Caveat",
+        "font_weight": 700,
+        "letter_spacing_em": -0.03,
+        "line_height": 1,
+        "color_light": "#1c1a17",
+        "color_dark": "#faf7f1"
+      },
+      "mark": {
+        "type": "heart",
+        "semantic": "period — reads as punctuation, reveals as human",
+        "color": "#c8392b",
+        "svg_viewbox": "0 0 28 26",
+        "svg_path": "M14 24 C14 24 2 15 2 8 C2 4.5 4.8 2 8 2 C10.5 2 12.8 3.5 14 5.5 C15.2 3.5 17.5 2 20 2 C23.2 2 26 4.5 26 8 C26 15 14 24 14 24Z",
+        "position": "inline_right_of_wordmark",
+        "vertical_align": "baseline",
+        "never_change_color": true
+      },
+      "layout": {
+        "direction": "row",
+        "align_items": "flex-end",
+        "gap": 0
+      },
+      "sizes": {
+        "hero":   { "wordmark_px": 96, "heart_w": 28, "heart_h": 26, "heart_margin_left": 6,  "heart_margin_bottom": 14 },
+        "medium": { "wordmark_px": 56, "heart_w": 17, "heart_h": 16, "heart_margin_left": 4,  "heart_margin_bottom": 9  },
+        "small":  { "wordmark_px": 36, "heart_w": 11, "heart_h": 10, "heart_margin_left": 3,  "heart_margin_bottom": 6  },
+        "micro":  { "wordmark_px": 22, "heart_w": 7,  "heart_h": 6,  "heart_margin_left": 2,  "heart_margin_bottom": 3  }
+      }
+    },
+  
+    "typography": {
+      "primary": {
+        "family": "Caveat",
+        "weights": [400, 500, 600, 700],
+        "source": "https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700",
+        "usage": "wordmark, headlines, brand voice"
+      },
+      "secondary": {
+        "family": "JetBrains Mono",
+        "weights": [300, 400],
+        "source": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400",
+        "usage": "labels, metadata, technical copy, subscripts"
+      }
+    },
+  
+    "colors": {
+      "ink": {
+        "name": "Ink",
+        "hex": "#1c1a17",
+        "usage": "wordmark on light, primary text"
+      },
+      "heart": {
+        "name": "Heart",
+        "hex": "#c8392b",
+        "usage": "logo mark only — never use as general brand accent"
+      },
+      "paper": {
+        "name": "Paper",
+        "hex": "#faf7f1",
+        "usage": "wordmark on dark, light backgrounds"
+      },
+      "bg": {
+        "name": "Warm Ground",
+        "hex": "#f2ede4",
+        "usage": "default background, warm off-white"
+      },
+      "muted": {
+        "name": "Muted",
+        "hex": "#9a9085",
+        "usage": "labels, secondary text, subscripts"
+      },
+      "rule": {
+        "name": "Rule",
+        "hex": "#ddd5c8",
+        "usage": "dividers, borders, hairlines"
+      },
+      "dark": {
+        "name": "Dark",
+        "hex": "#1c1a17",
+        "usage": "dark background variant — same as Ink"
+      }
+    },
+  
+    "backgrounds": {
+      "light": {
+        "bg": "#f2ede4",
+        "wordmark": "#1c1a17",
+        "heart": "#c8392b"
+      },
+      "dark": {
+        "bg": "#1c1a17",
+        "wordmark": "#faf7f1",
+        "heart": "#c8392b"
+      },
+      "paper": {
+        "bg": "#faf7f1",
+        "wordmark": "#1c1a17",
+        "heart": "#c8392b"
+      }
+    },
+  
+    "rules": {
+      "heart_color": "Always #c8392b — never recolor the heart to match backgrounds or themes",
+      "wordmark_case": "Always lowercase — never capitalize or uppercase 'human'",
+      "font_swap": "Never substitute Caveat for another font in the wordmark",
+      "heart_as_period": "The heart sits at baseline as punctuation — never float, center, or superscript it",
+      "minimum_size": "Do not render below 22px wordmark — heart becomes illegible",
+      "clear_space": "Maintain clear space equal to the height of the 'h' on all sides",
+      "no_tagline_required": "The wordmark + heart is complete alone — taglines are optional"
+    },
+  
+    "voice": {
+      "tone": "handwritten, warm, human — never robotic or corporate",
+      "language": "lowercase preferred in all brand copy",
+      "latin": "imago dei — use sparingly as philosophical anchor, not a tagline"
+    },
+  
+    "assets": {
+      "heart_svg_viewbox": "0 0 28 26",
+      "heart_svg_rendered": "280x260px",
+      "heart_svg_path": "M14 24 C14 24 2 15 2 8 C2 4.5 4.8 2 8 2 C10.5 2 12.8 3.5 14 5.5 C15.2 3.5 17.5 2 20 2 C23.2 2 26 4.5 26 8 C26 15 14 24 14 24Z",
+      "font_google_url": "https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=JetBrains+Mono:wght@300;400"
+    }
+  }
