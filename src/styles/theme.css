@@ -99,6 +99,41 @@ code, pre, kbd, samp {
 }
 
 /* ============================================================
+   HEADING ANCHOR LINKS — smaller # icon, no overlap
+   ============================================================ */
+
+.sl-markdown-content .sl-heading-wrapper {
+  --sl-anchor-icon-size: 0.55em;
+  --sl-anchor-icon-gap: 0.7em;
+}
+
+.sl-markdown-content .sl-anchor-icon > svg {
+  display: none;
+}
+
+.sl-markdown-content .sl-anchor-icon::before {
+  content: '#';
+  display: inline-block;
+  font-size: var(--sl-anchor-icon-size);
+  font-weight: 500;
+  color: var(--sl-color-gray-3);
+  vertical-align: top;
+  transform: translateY(
+    calc((var(--sl-line-height-headings) * 1em - var(--sl-anchor-icon-size)) / 2)
+  );
+}
+
+.sl-markdown-content .sl-heading-wrapper:hover .sl-anchor-icon::before,
+.sl-markdown-content .sl-anchor-link:focus .sl-anchor-icon::before {
+  color: var(--sl-color-gray-2);
+}
+
+/* Tighter touch area so the link doesn't overlap the heading */
+.sl-markdown-content .sl-anchor-link::after {
+  inset: -0.15rem -0.25rem;
+}
+
+/* ============================================================
    HEADINGS
    ============================================================ */
 
