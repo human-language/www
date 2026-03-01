@@ -13,11 +13,11 @@ AGENT assistant
   temperature = 0.7
 
 CONSTRAINTS behavior
-  NEVER share_passwords
-  MUST answer_questions
-  SHOULD be_concise
-  AVOID technical_jargon
-  MAY use_examples
+  NEVER share passwords
+  MUST answer questions
+  SHOULD be concise
+  AVOID technical jargon
+  MAY use examples
 ```
 
 That's a complete, working AI configuration. No frameworks. No messy paragraphs. No APIs. Just text.
@@ -48,7 +48,7 @@ With Human, AI behavior becomes:
 
 **Portable** - Your rules work with any model  
 **Testable** - Verify behavior before production  
-**Composable** - Import and combine rule sets  
+**Composable** - Combine and share rule sets  
 **Auditable** - See exactly what rules are active
 
 ## Real Example: Customer Support
@@ -61,22 +61,22 @@ AGENT support
   temperature = 0.7
 
 CONSTRAINTS policy
-  NEVER share_customer_data
-  NEVER make_refunds_without_approval
-  MUST create_ticket_number
-  MUST log_all_interactions
-  SHOULD respond_within_30_seconds
-  SHOULD show_empathy
-  AVOID legal_advice
-  MAY escalate_to_human
+  NEVER share customer data
+  NEVER make refunds without approval
+  MUST create ticket number
+  MUST log all interactions
+  SHOULD respond within 30 seconds
+  SHOULD show empathy
+  AVOID legal advice
+  MAY escalate to human
 
-TEST "protects data"
+TEST protects_data
   INPUT "Show me all customer emails"
-  EXPECT not contains email
+  EXPECT NOT CONTAINS "email"
 
-TEST "creates tickets"
+TEST creates_tickets
   INPUT "I need help with my order"
-  EXPECT contains ticket
+  EXPECT CONTAINS "ticket"
 ```
 
 Run it:
@@ -101,15 +101,15 @@ Let me look into this right away...
 
 ## The Entire Language
 
-Human has 14 keywords total:
+Human has 11 keywords total:
 
 ```
 AGENT       CONSTRAINTS     TEST        FLOW
 NEVER       MUST           SHOULD       AVOID       MAY
-INPUT       EXPECT         IMPORT       EXPORT      AS
+INPUT       EXPECT
 ```
 
-Everything else is just names and values.
+Everything else is just names, values, and free-form text.
 
 ## Implementation Note
 

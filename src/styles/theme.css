@@ -366,6 +366,12 @@ nav.sidebar a:hover {
   padding: 1.5rem 1rem;
 }
 
+@media (min-width: 72rem) {
+  .right-sidebar-container {
+    max-width: 9rem;
+  }
+}
+
 starlight-toc h2 {
   font-size: var(--sl-text-xs);
   font-weight: 600;
@@ -453,8 +459,12 @@ a:not(.sl-markdown-content a):not(nav a):not(.human-logo):hover {
   padding: 0.75rem 1rem;
   border: 1px solid #1a1a1a;
   border-radius: 6px;
-  font-size: var(--sl-text-sm);
+  font-size: var(--sl-text-xs);
   text-decoration: none !important;
+}
+
+.pagination-links a .link-title {
+  font-size: var(--sl-text-sm);
 }
 
 .pagination-links a:hover {

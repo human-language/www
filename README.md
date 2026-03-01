@@ -1,53 +1,33 @@
 # Human Language Documentation
 
-Documentation site for the Human configuration language - a simple, readable way to control AI behavior.
+Documentation site for Human, a configuration language for AI agents.
 
-## What is Human?
+## Build
 
-Human is an experimental configuration language that tells AI agents how to behave using constraint levels (NEVER, MUST, SHOULD, AVOID, MAY). No frameworks, no APIs - just text.
+	pnpm install
+	pnpm dev      # dev server
+	pnpm build    # production build
+	pnpm preview  # preview build
 
 ## Stack
 
-- **Framework**: Astro (static site generator)
-- **Styling**: Tailwind CSS
-- **Deployment**: Vercel
-- **Language**: TypeScript
+Astro 5, Starlight, TypeScript. Deployed to Vercel.
 
-## Quick Start
+## Layout
 
-```bash
-# Install dependencies
-pnpm install
+	src/
+	├── content/docs/     # Markdown docs (Starlight content collection)
+	├── components/       # Astro overrides (Header, Head, SiteTitle)
+	├── pages/            # index.astro (redirects to /intro)
+	├── scripts/         # SPA nav, prefetch
+	└── styles/          # theme.css (dark-only)
 
-# Start dev server
-pnpm dev
+## Config
 
-# Build for production
-pnpm build
-```
-
-## Project Structure
-
-```
-src/
-├── pages/docs/          # Documentation markdown files
-├── components/          # Reusable UI components
-├── layouts/            # Page layouts
-└── styles/             # Global CSS and Tailwind config
-```
-
-## Development
-
-- Documentation is written in Markdown with frontmatter
-- Uses custom DocsLayout for consistent styling
-- Automatic table of contents generation
-- Dark/light theme support
-
-## Deployment
-
-Site is automatically deployed to Vercel on push to main branch.
+- astro.config.mjs — site URL, Starlight, sitemap, redirects
+- vercel.json — build, headers, cache
 
 ## Links
 
-- **Live Site**: https://human-lang.com
-- **Language Repo**: https://github.com/human-language
+- Site: https://human-lang.org
+- Repo: https://github.com/human-language/www

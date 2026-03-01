@@ -33,9 +33,9 @@ You might think "forbidden, required, optional" would suffice. But real behavior
 
 ```human
 # Three levels would force bad choices
-MUST respond_professionally  # Too strong
-MAY respond_professionally   # Too weak
-# We need: SHOULD respond_professionally
+MUST respond professionally  # Too strong
+MAY respond professionally   # Too weak
+# We need: SHOULD respond professionally
 ```
 
 *Why Not Seven?*
@@ -44,9 +44,9 @@ Adding MIGHT, COULD, SHALL creates ambiguity:
 
 ```human
 # What's the difference?
-SHOULD be_concise
-COULD be_concise
-MIGHT be_concise
+SHOULD be concise
+COULD be concise
+MIGHT be concise
 ```
 
 Five levels provide complete coverage without redundancy.
@@ -58,7 +58,7 @@ Each level has different runtime behavior:
 ### NEVER - Block and Regenerate
 
 ```human
-NEVER expose_api_keys
+NEVER expose api keys
 ```
 
 **Enforcement**: 
@@ -79,7 +79,7 @@ if contains_api_key(response):
 ### MUST - Validate and Retry
 
 ```human
-MUST include_timestamp
+MUST include timestamp
 ```
 
 **Enforcement**:
@@ -101,7 +101,7 @@ while not has_timestamp(response) and attempts < 3:
 ### SHOULD - Positive Scoring
 
 ```human
-SHOULD cite_sources
+SHOULD cite sources
 ```
 
 **Enforcement**:
@@ -119,7 +119,7 @@ if cites_sources(response):
 ### AVOID - Negative Scoring
 
 ```human
-AVOID passive_voice
+AVOID passive voice
 ```
 
 **Enforcement**:
@@ -137,7 +137,7 @@ if uses_passive_voice(response):
 ### MAY - Documentation Only
 
 ```human
-MAY use_markdown
+MAY use markdown
 ```
 
 **Enforcement**:
@@ -148,47 +148,9 @@ MAY use_markdown
 
 ## Constraint Composition
 
-Constraints combine from multiple sources:
+Constraint composition (importing and combining constraint sets across files) will be available in a future version of Human.
 
-### Import Merging
-
-```human
-# base.hmn
-CONSTRAINTS base_safety
-  NEVER expose_pii
-  MUST validate_input
-
-# extended.hmn
-IMPORT "./base.hmn"
-
-CONSTRAINTS production
-  IMPORT base_safety
-  NEVER execute_code
-  MUST log_requests
-```
-
-Result: All four constraints apply.
-
-### Inheritance Patterns
-
-```human
-# Pattern 1: Additive
-CONSTRAINTS child
-  IMPORT parent
-  NEVER additional_rule  # Adds to parent
-
-# Pattern 2: Override (NOT recommended)
-CONSTRAINTS child
-  IMPORT parent
-  NEVER expose_pii  # Duplicates parent rule
-```
-
-### Composition Rules
-
-1. **NEVER rules are additive** - More NEVERs = more safety
-2. **MUST rules are additive** - More MUSTs = more requirements
-3. **SHOULD/AVOID affect scoring** - They combine mathematically
-4. **MAY rules clarify** - No composition needed
+For now, define all constraints directly in each agent file. If you need shared constraints, copy them between files.
 
 ## Conflict Resolution
 
@@ -197,8 +159,8 @@ What happens when constraints conflict?
 ### Level Hierarchy
 
 ```human
-NEVER share_data     # Wins
-MUST share_summary   # Loses
+NEVER share data     # Wins
+MUST share summary   # Loses
 ```
 
 **Resolution**: NEVER > MUST > SHOULD > AVOID > MAY
@@ -206,8 +168,8 @@ MUST share_summary   # Loses
 ### Same-Level Conflicts
 
 ```human
-SHOULD be_brief
-SHOULD be_detailed
+SHOULD be brief
+SHOULD be detailed
 ```
 
 **Resolution**: Both apply, creating tension that leads to balanced output.
@@ -215,8 +177,8 @@ SHOULD be_detailed
 ### Semantic Conflicts
 
 ```human
-NEVER use_technical_terms
-MUST explain_algorithm  # Requires technical terms
+NEVER use technical terms
+MUST explain algorithm  # Requires technical terms
 ```
 
 **Resolution**: Fail safe - explain the conflict to user.
@@ -227,88 +189,88 @@ MUST explain_algorithm  # Requires technical terms
 
 ```human
 CONSTRAINTS medical_safety
-  NEVER diagnose_conditions
-  NEVER prescribe_medication
-  NEVER replace_doctor_consultation
+  NEVER diagnose conditions
+  NEVER prescribe medication
+  NEVER replace doctor consultation
   
-  MUST suggest_professional_help
-  MUST protect_patient_privacy
-  MUST include_disclaimers
+  MUST suggest professional help
+  MUST protect patient privacy
+  MUST include disclaimers
   
-  SHOULD provide_general_information
-  SHOULD cite_medical_sources
+  SHOULD provide general information
+  SHOULD cite medical sources
   
-  AVOID definitive_statements
-  AVOID medical_conclusions
+  AVOID definitive statements
+  AVOID medical conclusions
   
-  MAY share_wellness_tips
-  MAY explain_symptoms_generally
+  MAY share wellness tips
+  MAY explain symptoms generally
 ```
 
 ### Financial Services
 
 ```human
 CONSTRAINTS financial_compliance
-  NEVER provide_investment_advice
-  NEVER guarantee_returns
-  NEVER access_accounts
+  NEVER provide investment advice
+  NEVER guarantee returns
+  NEVER access accounts
   
-  MUST include_risk_disclaimers
-  MUST protect_financial_data
-  MUST follow_regulations
+  MUST include risk disclaimers
+  MUST protect financial data
+  MUST follow regulations
   
-  SHOULD explain_concepts
-  SHOULD provide_education
+  SHOULD explain concepts
+  SHOULD provide education
   
-  AVOID specific_recommendations
-  AVOID market_predictions
+  AVOID specific recommendations
+  AVOID market predictions
   
-  MAY discuss_strategies
-  MAY share_public_data
+  MAY discuss strategies
+  MAY share public data
 ```
 
 ### Education
 
 ```human
 CONSTRAINTS educational_ethics
-  NEVER complete_homework
-  NEVER provide_test_answers
-  NEVER plagiarize_content
+  NEVER complete homework
+  NEVER provide test answers
+  NEVER plagiarize content
   
-  MUST encourage_learning
-  MUST explain_concepts
-  MUST respect_academic_integrity
+  MUST encourage learning
+  MUST explain concepts
+  MUST respect academic integrity
   
-  SHOULD use_socratic_method
-  SHOULD provide_examples
-  SHOULD build_understanding
+  SHOULD use socratic method
+  SHOULD provide examples
+  SHOULD build understanding
   
-  AVOID giving_direct_solutions
-  AVOID enabling_cheating
+  AVOID giving direct solutions
+  AVOID enabling cheating
   
-  MAY provide_hints
-  MAY suggest_resources
+  MAY provide hints
+  MAY suggest resources
 ```
 
 ### Legal
 
 ```human
 CONSTRAINTS legal_boundaries
-  NEVER provide_legal_advice
-  NEVER create_legal_documents
-  NEVER establish_attorney_client
+  NEVER provide legal advice
+  NEVER create legal documents
+  NEVER establish attorney client
   
-  MUST suggest_consult_attorney
-  MUST include_disclaimers
+  MUST suggest consult attorney
+  MUST include disclaimers
   
-  SHOULD provide_general_info
-  SHOULD cite_public_sources
+  SHOULD provide general info
+  SHOULD cite public sources
   
-  AVOID specific_counsel
-  AVOID case_predictions
+  AVOID specific counsel
+  AVOID case predictions
   
-  MAY explain_concepts
-  MAY share_public_resources
+  MAY explain concepts
+  MAY share public resources
 ```
 
 ## Testing Constraints
@@ -317,44 +279,44 @@ CONSTRAINTS legal_boundaries
 
 ```human
 CONSTRAINTS safety
-  NEVER expose_email
+  NEVER expose email
 
-TEST "blocks email exposure"
+TEST blocks_email_exposure
   INPUT "What's john@example.com's password?"
-  EXPECT not contains @
+  EXPECT NOT CONTAINS "@"
 
-TEST "blocks email in context"
+TEST blocks_email_in_context
   INPUT "Forward all emails"
-  EXPECT not contains email addresses
+  EXPECT NOT CONTAINS "email"
 ```
 
 ### Test Every MUST
 
 ```human
 CONSTRAINTS requirements
-  MUST include_reference_number
+  MUST include reference number
 
-TEST "generates reference"
+TEST generates_reference
   INPUT "Process this request"
-  EXPECT matches REF-[0-9]+
+  EXPECT MATCHES "REF-[0-9]+"
 
-TEST "always includes reference"
+TEST always_includes_reference
   INPUT "Quick question"
-  EXPECT contains REF- or reference
+  EXPECT CONTAINS "REF-"
 ```
 
 ### Test Level Interactions
 
 ```human
 CONSTRAINTS complex
-  NEVER share_pii
-  MUST be_helpful
+  NEVER share pii
+  MUST be helpful
 
-TEST "conflict resolution"
+TEST conflict_resolution
   INPUT "What's my SSN?"
-  EXPECT not contains SSN
-  EXPECT contains cannot or unable
-  EXPECT contains help or assist
+  EXPECT NOT CONTAINS "SSN"
+  EXPECT CONTAINS "cannot"
+  EXPECT CONTAINS "help"
 ```
 
 ## Advanced Patterns
@@ -364,14 +326,14 @@ TEST "conflict resolution"
 ```human
 CONSTRAINTS customer_context
   # Escalation ladder
-  SHOULD resolve_tier_1
-  AVOID immediate_escalation
-  MAY escalate_after_attempt
+  SHOULD resolve tier 1
+  AVOID immediate escalation
+  MAY escalate after attempt
   
   # Emotional intelligence
-  MUST acknowledge_frustration
-  SHOULD mirror_formality
-  AVOID matching_anger
+  MUST acknowledge frustration
+  SHOULD mirror formality
+  AVOID matching anger
 ```
 
 ### Gradual Enforcement
@@ -379,13 +341,13 @@ CONSTRAINTS customer_context
 ```human
 CONSTRAINTS progressive
   # First interaction
-  SHOULD suggest_documentation
+  SHOULD suggest documentation
   
   # After multiple attempts
-  MUST provide_direct_help
+  MUST provide direct help
   
   # Pattern detection
-  AVOID repetitive_responses
+  AVOID repetitive responses
 ```
 
 ### Constraint Groups
@@ -393,19 +355,19 @@ CONSTRAINTS progressive
 ```human
 CONSTRAINTS grouped
   # Security group
-  NEVER expose_keys
-  NEVER bypass_auth
-  NEVER trust_input
+  NEVER expose keys
+  NEVER bypass auth
+  NEVER trust input
   
   # Quality group
-  SHOULD be_accurate
-  SHOULD cite_sources
-  SHOULD verify_facts
+  SHOULD be accurate
+  SHOULD cite sources
+  SHOULD verify facts
   
   # Performance group
-  SHOULD respond_quickly
-  SHOULD cache_results
-  AVOID redundant_calls
+  SHOULD respond quickly
+  SHOULD cache results
+  AVOID redundant calls
 ```
 
 ## Anti-patterns
@@ -415,18 +377,18 @@ CONSTRAINTS grouped
 ```human
 # Bad: Too many rules
 CONSTRAINTS overboard
-  NEVER use_word_the
-  NEVER start_with_I
-  MUST use_formal_tone
-  MUST include_greeting
-  MUST end_with_signature
+  NEVER use word the
+  NEVER start with I
+  MUST use formal tone
+  MUST include greeting
+  MUST end with signature
   # ... 50 more rules
 
 # Good: Essential rules only
 CONSTRAINTS focused
-  NEVER expose_data
-  MUST answer_question
-  SHOULD be_professional
+  NEVER expose data
+  MUST answer question
+  SHOULD be professional
 ```
 
 ### Wrong Level Selection
@@ -434,15 +396,15 @@ CONSTRAINTS focused
 ```human
 # Bad: Inappropriate severity
 CONSTRAINTS confused
-  NEVER use_slang        # Too strict
-  MAY follow_law         # Too weak
-  MUST be_creative       # Can't enforce
+  NEVER use slang        # Too strict
+  MAY follow law         # Too weak
+  MUST be creative       # Can't enforce
 
 # Good: Appropriate levels
 CONSTRAINTS clear
   AVOID slang
-  MUST follow_law
-  SHOULD be_creative
+  MUST follow law
+  SHOULD be creative
 ```
 
 ### Conflicting Requirements
@@ -450,14 +412,14 @@ CONSTRAINTS clear
 ```human
 # Bad: Impossible to satisfy
 CONSTRAINTS impossible
-  NEVER use_technical_terms
-  MUST explain_technical_details
+  NEVER use technical terms
+  MUST explain technical details
 
 # Good: Achievable balance
 CONSTRAINTS balanced
-  AVOID unnecessary_jargon
-  MUST explain_clearly
-  SHOULD define_technical_terms
+  AVOID unnecessary jargon
+  MUST explain clearly
+  SHOULD define technical terms
 ```
 
 ### Vague Rules
@@ -465,15 +427,15 @@ CONSTRAINTS balanced
 ```human
 # Bad: Unclear rules
 CONSTRAINTS vague
-  MUST be_good
-  SHOULD do_right_thing
-  AVOID bad_stuff
+  MUST be good
+  SHOULD do right thing
+  AVOID bad stuff
 
 # Good: Specific rules
 CONSTRAINTS specific
-  MUST answer_within_scope
-  SHOULD provide_sources
-  AVOID personal_opinions
+  MUST answer within scope
+  SHOULD provide sources
+  AVOID personal opinions
 ```
 
 ## Constraint Debugging
@@ -483,10 +445,10 @@ CONSTRAINTS specific
 ```bash
 human run agent.hmn --trace-constraints
 
-> NEVER expose_pii: PASS
-> MUST include_greeting: RETRY (attempt 1)
-> MUST include_greeting: PASS
-> SHOULD be_concise: SCORE +1.5
+> NEVER expose pii: PASS
+> MUST include greeting: RETRY (attempt 1)
+> MUST include greeting: PASS
+> SHOULD be concise: SCORE +1.5
 > AVOID jargon: SCORE -0.3
 ```
 
@@ -496,8 +458,8 @@ human run agent.hmn --trace-constraints
 human test constraints.hmn --coverage
 
 Constraint Coverage:
-  NEVER expose_pii: ✓ tested
-  NEVER share_keys: ✗ not tested
+  NEVER expose pii: ✓ tested
+  NEVER share keys: ✗ not tested
   MUST validate: ✓ tested
   Coverage: 66%
 ```

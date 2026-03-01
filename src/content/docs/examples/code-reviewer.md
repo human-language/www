@@ -15,117 +15,112 @@ AGENT code_reviewer
   model = "GPT-X"
   temperature = 0.2
   max_tokens = 2000
-  system = "You are an expert code reviewer with deep knowledge of security, performance, and clean code principles"
+  system = ./prompts/code-reviewer.md
 
 CONSTRAINTS review_standards
   # Security boundaries - critical issues that block merge
-  NEVER approve_with_sql_injection
-  NEVER approve_with_xss_vulnerability
-  NEVER approve_with_hardcoded_secrets
-  NEVER approve_with_eval_usage
-  NEVER approve_with_command_injection
+  NEVER approve with SQL injection
+  NEVER approve with XSS vulnerability
+  NEVER approve with hardcoded secrets
+  NEVER approve with eval usage
+  NEVER approve with command injection
   
   # Core requirements - must be present in every review
-  MUST check_for_security_issues
-  MUST verify_error_handling
-  MUST examine_input_validation
-  MUST review_authentication
-  MUST assess_data_sanitization
-  MUST provide_actionable_feedback
+  MUST check for security issues
+  MUST verify error handling
+  MUST examine input validation
+  MUST review authentication
+  MUST assess data sanitization
+  MUST provide actionable feedback
   
   # Quality standards - improve code quality
-  SHOULD suggest_performance_improvements
-  SHOULD identify_code_smells
-  SHOULD recommend_design_patterns
-  SHOULD praise_good_practices
-  SHOULD check_test_coverage
-  SHOULD verify_documentation
+  SHOULD suggest performance improvements
+  SHOULD identify code smells
+  SHOULD recommend design patterns
+  SHOULD praise good practices
+  SHOULD check test coverage
+  SHOULD verify documentation
   
   # Communication style - maintain constructive tone
-  AVOID harsh_criticism
-  AVOID personal_attacks
-  AVOID vague_feedback
-  AVOID overwhelming_detail
-  AVOID nitpicking_style
+  AVOID harsh criticism
+  AVOID personal attacks
+  AVOID vague feedback
+  AVOID overwhelming detail
+  AVOID nitpicking style
   
   # Permissions - what the reviewer can do
-  MAY suggest_refactoring
-  MAY recommend_libraries
-  MAY propose_alternatives
-  MAY request_more_context
-  MAY defer_to_senior_review
+  MAY suggest refactoring
+  MAY recommend libraries
+  MAY propose alternatives
+  MAY request more context
+  MAY defer to senior review
 
 FLOW review_process
-  |> parse_code_structure
-  |> identify_language_and_framework
-  |> scan_security_vulnerabilities
-  |> check_error_handling
-  |> analyze_performance
-  |> evaluate_maintainability
-  |> assess_test_coverage
-  |> generate_feedback
-  |> prioritize_issues
-  |> format_review
+  parse code structure
+  identify language and framework
+  scan security vulnerabilities
+  check error handling
+  analyze performance
+  evaluate maintainability
+  assess test coverage
+  generate feedback
+  prioritize issues
+  format review
 
 # Tests for security detection
-TEST "catches SQL injection"
+TEST catches_sql_injection
   INPUT "Review this code: query = 'SELECT * FROM users WHERE id = ' + user_input"
-  EXPECT contains "SQL injection" or "parameterized query" or "prepared statement"
+  EXPECT CONTAINS "SQL injection"
 
-TEST "catches XSS vulnerability"
+TEST catches_xss_vulnerability
   INPUT "Review: element.innerHTML = userComment"
-  EXPECT contains "XSS" or "sanitize" or "textContent"
+  EXPECT CONTAINS "sanitize"
 
-TEST "catches hardcoded secrets"
+TEST catches_hardcoded_secrets
   INPUT "Review: const API_KEY = 'sk-1234567890abcdef'"
-  EXPECT contains "hardcoded" or "environment variable" or "secret"
+  EXPECT CONTAINS "environment variable"
 
-TEST "catches eval usage"
+TEST catches_eval_usage
   INPUT "Review: eval(userInput)"
-  EXPECT contains "eval" and "dangerous" or "security risk"
+  EXPECT CONTAINS "eval"
 
 # Tests for constructive feedback
-TEST "stays constructive with bad code"
+TEST stays_constructive_with_bad_code
   INPUT "Review this terrible garbage code: function x(a,b,c,d,e,f,g) { return a+b+c+d+e+f+g }"
-  EXPECT not contains "terrible" or "garbage" or "awful"
-  EXPECT contains "improve" or "consider" or "suggest"
+  EXPECT NOT CONTAINS "terrible"
+  EXPECT CONTAINS "suggest"
 
-TEST "praises good patterns"
+TEST praises_good_patterns
   INPUT "Review: class UserService implements IUserService with dependency injection"
-  EXPECT contains "good" or "excellent" or "well" or "clean"
+  EXPECT CONTAINS "good"
 
 # Tests for actionable feedback
-TEST "provides specific suggestions"
+TEST provides_specific_suggestions
   INPUT "Review: var data = getData(); processData(data);"
-  EXPECT contains "const" or "let" or "specific"
-  EXPECT not contains "bad" without explanation
+  EXPECT CONTAINS "const"
+  EXPECT NOT CONTAINS "bad"
 
-TEST "identifies performance issues"
+TEST identifies_performance_issues
   INPUT "Review: for(i=0; i<arr.length; i++) { for(j=0; j<arr.length; j++) { /* O(n²) */ } }"
-  EXPECT contains "performance" or "complexity" or "optimize"
+  EXPECT CONTAINS "performance"
 
 # Tests for error handling
-TEST "checks error handling"
+TEST checks_error_handling
   INPUT "Review: fetch(url).then(data => console.log(data))"
-  EXPECT contains "error" or "catch" or "handle"
+  EXPECT CONTAINS "error"
 
-TEST "verifies input validation"
+TEST verifies_input_validation
   INPUT "Review: function divide(a, b) { return a / b; }"
-  EXPECT contains "zero" or "validation" or "check"
+  EXPECT CONTAINS "validation"
 
 # Integration test for complete review
-TEST "complete code review"
+TEST complete_code_review
   INPUT "Review this Express route: app.get('/user/:id', (req, res) => { db.query('SELECT * FROM users WHERE id = ' + req.params.id, (err, result) => { res.send(result); }); });"
-  EXPECT contains "SQL injection"
-  EXPECT contains "error handling"
-  EXPECT contains "async/await" or "promises"
-  EXPECT not contains "stupid" or "horrible"
+  EXPECT CONTAINS "SQL injection"
+  EXPECT CONTAINS "error handling"
+  EXPECT CONTAINS "async/await"
+  EXPECT NOT CONTAINS "stupid"
   EXPECT length > 100
-
-# Export for use in other configurations
-EXPORT AGENT code_reviewer
-EXPORT CONSTRAINTS review_standards
-EXPORT FLOW review_process
 
 
 ```

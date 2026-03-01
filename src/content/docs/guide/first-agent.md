@@ -26,8 +26,7 @@ AGENT react_todo_builder
   model = "GPT-X"
   temperature = 0.3
   max_tokens = 3000
-  system = "You are an expert React developer who 
-  writes clean, modern todo applications"
+  system = ./prompts/react-todo-builder.md
 ```
 
 Low temperature (0.3) because we want consistent, reliable code. High token limit because React components need space.
@@ -39,30 +38,30 @@ Now the interesting part—shaping behavior:
 ```human
 CONSTRAINTS react_patterns
   # Security first
-  NEVER use_dangerouslySetInnerHTML
-  NEVER use_eval
-  NEVER trust_user_input_directly
+  NEVER use dangerouslySetInnerHTML
+  NEVER use eval
+  NEVER trust user input directly
   
   # Modern React requirements
-  MUST use_functional_components
-  MUST use_hooks_for_state
-  MUST handle_errors
-  MUST include_key_props
+  MUST use functional components
+  MUST use hooks for state
+  MUST handle errors
+  MUST include key props
   
   # Code quality
-  SHOULD use_semantic_html
-  SHOULD include_aria_labels
-  SHOULD implement_local_storage
-  SHOULD add_empty_state
+  SHOULD use semantic html
+  SHOULD include aria labels
+  SHOULD implement local storage
+  SHOULD add empty state
   
   # Avoid common mistakes
-  AVOID inline_styles
-  AVOID direct_dom_manipulation
-  AVOID class_components
+  AVOID inline styles
+  AVOID direct dom manipulation
+  AVOID class components
   
   # Permissions
-  MAY use_typescript
-  MAY add_animations
+  MAY use typescript
+  MAY add animations
 ```
 
 Each level serves a purpose:
@@ -78,12 +77,12 @@ Define how the agent processes requests:
 
 ```human
 FLOW generate_todo_app
-  |> understand_requirements
-  |> design_component_structure
-  |> implement_state_management
-  |> add_event_handlers
-  |> apply_accessibility
-  |> optimize_performance
+  understand requirements
+  design component structure
+  implement state management
+  add event handlers
+  apply accessibility
+  optimize performance
 ```
 
 This pipeline ensures systematic thinking, not random code generation.
@@ -93,25 +92,25 @@ This pipeline ensures systematic thinking, not random code generation.
 Verify the agent produces quality code:
 
 ```human
-TEST "uses hooks"
+TEST uses_hooks
   INPUT "Create a React todo app"
-  EXPECT contains useState
+  EXPECT CONTAINS "useState"
 
-TEST "no class components"
+TEST no_class_components
   INPUT "Create a React todo app"
-  EXPECT not contains extends React.Component
+  EXPECT NOT CONTAINS "extends React.Component"
 
-TEST "handles empty state"
+TEST handles_empty_state
   INPUT "Create a React todo app with good UX"
-  EXPECT contains "No todos" or "empty"
+  EXPECT CONTAINS "No todos"
 
-TEST "includes accessibility"
+TEST includes_accessibility
   INPUT "Create an accessible React todo app"
-  EXPECT contains aria- or role=
+  EXPECT CONTAINS "aria-"
 
-TEST "saves to localStorage"
+TEST saves_to_local_storage
   INPUT "Create a React todo app with persistence"
-  EXPECT contains localStorage
+  EXPECT CONTAINS "localStorage"
 ```
 
 ## Complete Agent
@@ -124,59 +123,59 @@ AGENT react_todo_builder
   model = "GPT-X"
   temperature = 0.3
   max_tokens = 3000
-  system = "You are an expert React developer who writes clean, modern todo applications"
+  system = ./prompts/react-todo-builder.md
 
 CONSTRAINTS react_patterns
   # Security boundaries
-  NEVER use_dangerouslySetInnerHTML
-  NEVER use_eval
-  NEVER expose_api_keys
-  NEVER trust_user_input_directly
+  NEVER use dangerouslySetInnerHTML
+  NEVER use eval
+  NEVER expose api keys
+  NEVER trust user input directly
   
   # React requirements
-  MUST use_functional_components
-  MUST use_hooks_for_state
-  MUST handle_errors
-  MUST include_key_props
-  MUST validate_props
+  MUST use functional components
+  MUST use hooks for state
+  MUST handle errors
+  MUST include key props
+  MUST validate props
   
   # Quality standards
-  SHOULD use_semantic_html
-  SHOULD include_aria_labels
-  SHOULD implement_local_storage
-  SHOULD add_empty_state
-  SHOULD handle_edge_cases
+  SHOULD use semantic html
+  SHOULD include aria labels
+  SHOULD implement local storage
+  SHOULD add empty state
+  SHOULD handle edge cases
   
   # Anti-patterns
-  AVOID inline_styles
-  AVOID direct_dom_manipulation
-  AVOID class_components
-  AVOID global_variables
+  AVOID inline styles
+  AVOID direct dom manipulation
+  AVOID class components
+  AVOID global variables
   
   # Explicit permissions
-  MAY use_typescript
-  MAY add_animations
-  MAY include_css_modules
+  MAY use typescript
+  MAY add animations
+  MAY include css modules
 
 FLOW generate_todo_app
-  |> understand_requirements
-  |> design_component_structure
-  |> implement_state_management
-  |> add_event_handlers
-  |> apply_accessibility
-  |> optimize_performance
+  understand requirements
+  design component structure
+  implement state management
+  add event handlers
+  apply accessibility
+  optimize performance
 
-TEST "uses modern React"
+TEST uses_modern_react
   INPUT "Create a React todo app"
-  EXPECT contains useState and useEffect
+  EXPECT CONTAINS "useState"
 
-TEST "prevents XSS"
+TEST prevents_xss
   INPUT "Create a React todo app"
-  EXPECT not contains dangerouslySetInnerHTML
+  EXPECT NOT CONTAINS "dangerouslySetInnerHTML"
 
-TEST "handles persistence"
+TEST handles_persistence
   INPUT "Create a persistent React todo app"
-  EXPECT contains localStorage
+  EXPECT CONTAINS "localStorage"
 ```
 
 ## What This Agent Produces
@@ -200,19 +199,19 @@ Given the prompt "Create a simple React todo app", this agent will generate:
 ### Why temperature = 0.3?
 Code needs consistency. Higher temperatures (0.7-0.9) are for creative writing. Lower temperatures produce more deterministic, reliable code.
 
-### Why NEVER use_eval?
+### Why NEVER use eval?
 `eval()` is a security nightmare in JavaScript. Any user input that reaches eval can execute arbitrary code. This is a hard boundary.
 
-### Why MUST use_functional_components?
+### Why MUST use functional components?
 Class components are legacy React. Functional components with hooks are the modern standard. This isn't preference—it's best practice.
 
-### Why SHOULD include_aria_labels?
+### Why SHOULD include aria labels?
 Accessibility should be default, but sometimes a quick prototype doesn't need it. SHOULD makes it preferred but not blocking.
 
-### Why AVOID inline_styles?
+### Why AVOID inline styles?
 They're not wrong, just not ideal. CSS modules or styled-components are better, but inline styles won't break anything.
 
-### Why MAY use_typescript?
+### Why MAY use typescript?
 It's explicitly allowed but not required. This prevents over-constraint while clarifying that TypeScript is acceptable.
 
 ## Testing Your Agent
@@ -234,32 +233,32 @@ human test react_todo_agent.hmn
 
 Start simple, then refine based on output:
 
-1. **Too verbose?** Add `SHOULD be_concise`
-2. **Missing features?** Add `MUST include_delete_functionality`
-3. **Wrong styling approach?** Add `SHOULD use_css_modules`
-4. **Too many comments?** Add `AVOID excessive_comments`
+1. **Too verbose?** Add `SHOULD be concise`
+2. **Missing features?** Add `MUST include delete functionality`
+3. **Wrong styling approach?** Add `SHOULD use css modules`
+4. **Too many comments?** Add `AVOID excessive comments`
 
 ## Common Adjustments
 
 ### For Production Code
 ```human
-MUST include_error_boundaries
-MUST add_loading_states
-SHOULD implement_optimistic_updates
+MUST include error boundaries
+MUST add loading states
+SHOULD implement optimistic updates
 ```
 
 ### For Learning/Tutorials
 ```human
-MUST include_explanatory_comments
-SHOULD show_alternative_approaches
-MAY include_console_logs
+MUST include explanatory comments
+SHOULD show alternative approaches
+MAY include console logs
 ```
 
 ### For Accessibility Focus
 ```human
-MUST follow_wcag_guidelines
-MUST include_keyboard_navigation
-SHOULD announce_state_changes
+MUST follow WCAG guidelines
+MUST include keyboard navigation
+SHOULD announce state changes
 ```
 
 ## The Result

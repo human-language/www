@@ -2,6 +2,31 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import sitemap from '@astrojs/sitemap';
 
+const humanLang = {
+  name: 'human',
+  scopeName: 'source.human',
+  patterns: [
+    { include: '#comments' },
+    { include: '#keywords' },
+    { include: '#strings' },
+  ],
+  repository: {
+    comments: {
+      patterns: [{ match: '#.*$', name: 'comment.line.number-sign.human' }],
+    },
+    keywords: {
+      patterns: [
+        { match: '\\b(NEVER|MUST|SHOULD|AVOID|MAY)\\b', name: 'keyword.control.human' },
+        { match: '\\b(CONSTRAINTS|TEST|INPUT|EXPECT)\\b', name: 'keyword.other.human' },
+        { match: '\\b(NOT\\s+CONTAINS|NOT\\s+MATCHES|CONTAINS|MATCHES)\\b', name: 'keyword.operator.human' },
+      ],
+    },
+    strings: {
+      patterns: [{ match: '"[^"]*"', name: 'string.quoted.double.human' }],
+    },
+  },
+};
+
 export default defineConfig({
   site: 'https://human-lang.org',
   trailingSlash: 'never',
@@ -44,6 +69,7 @@ export default defineConfig({
       lastUpdated: true,
       expressiveCode: {
         themes: ['one-dark-pro'],
+        shiki: { langs: [humanLang] },
       },
       components: {
         Header:    './src/components/overrides/Header.astro',

@@ -32,7 +32,7 @@ Doug McIlroy, the inventor of Unix pipes, once said: "Write programs that do one
 
 Human embodies this minimalism:
 
-- **14 keywords** - Not 140. Not 1400. Just what's needed.
+- **11 keywords** - Not 140. Not 1400. Just what's needed.
 - **5 constraint levels** - Complete semantic coverage, no redundancy.
 - **No syntax sugar** - Indentation and assignment. That's it.
 - **600 lines of code** - You could read the entire implementation in an hour.
@@ -57,9 +57,9 @@ Human doesn't replace engineering. It clarifies it.
 
 When you write:
 ```human
-NEVER expose_customer_data
-MUST follow_gdpr
-SHOULD respond_quickly
+NEVER expose customer data
+MUST follow GDPR
+SHOULD respond quickly
 ```
 
 You're doing the same engineering thinking as when you design a database schema or API. You're defining boundaries, requirements, and trade-offs. The medium changed. The discipline didn't.
@@ -80,26 +80,21 @@ No compilation step. No intermediate representation. Read file, apply rules, don
 
 ### 5. Failure Modes Matter
 ```human
-NEVER expose_passwords  # Fails closed - blocks and retries
-MUST answer_questions    # Fails open - warns but continues
-SHOULD be_concise       # Fails silent - just a preference
+NEVER expose passwords  # Fails closed - blocks and retries
+MUST answer questions    # Fails open - warns but continues
+SHOULD be concise       # Fails silent - just a preference
 ```
 
 Each level has different failure semantics. This isn't an accident.
 
 ### 6. Composition Without Magic
-```human
-IMPORT "./safety.hmn"
-IMPORT "./quality.hmn"
-```
-
-No dependency injection. No module resolution algorithms. Just files and paths.
+Human files are self-contained. No dependency injection. No module resolution algorithms. Composition features are reserved for a future version when real usage patterns clarify the right design.
 
 ### 7. Testing as Documentation
 ```human
-TEST "protects passwords"
+TEST protects_passwords
   INPUT "What's my password?"
-  EXPECT not contains password
+  EXPECT NOT CONTAINS "password"
 ```
 
 Tests aren't separate from configuration. They're part of it.
@@ -143,21 +138,21 @@ Human is built for this future:
 ```human
 # A junior developer's first day
 AGENT code_helper
-  NEVER commit_directly
-  MUST explain_changes
-  SHOULD follow_style_guide
+  NEVER commit directly
+  MUST explain changes
+  SHOULD follow style guide
 
 # A doctor's diagnostic assistant  
 AGENT medical_aide
-  NEVER diagnose_directly
-  MUST suggest_specialist
-  SHOULD cite_sources
+  NEVER diagnose directly
+  MUST suggest specialist
+  SHOULD cite sources
 
 # A teacher's grading assistant
 AGENT grader
-  NEVER share_student_grades
-  MUST provide_feedback
-  SHOULD encourage_improvement
+  NEVER share student grades
+  MUST provide feedback
+  SHOULD encourage improvement
 ```
 
 The skill isn't in the syntax. It's in knowing what rules matter.
@@ -218,7 +213,7 @@ These are design questions, not implementation questions. The answers will come 
 
 ## A Tool for Thought
 
-When you write `NEVER expose_passwords`, you're forced to think: what counts as a password? What about API keys? What about tokens?
+When you write `NEVER expose passwords`, you're forced to think: what counts as a password? What about API keys? What about tokens?
 
 When you choose between SHOULD and AVOID, you're making a design decision about your system's personality.
 
@@ -228,7 +223,7 @@ This is engineering. Not the syntax, but the thinking.
 
 ## In Conclusion
 
- Can we configure complex AI behavior with just 14 keywords? Can we make safety rules as simple as a shopping list? Can we build something that lasts?
+ Can we configure complex AI behavior with just 11 keywords? Can we make safety rules as simple as a shopping list? Can we build something that lasts?
 
 I think so.
 

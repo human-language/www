@@ -15,230 +15,223 @@ AGENT react_todo_generator
   model = "gpt-4"
   temperature = 0.3
   max_tokens = 5000
-  system = "You are a React expert who creates clean, modern, accessible todo applications using hooks, functional components, and best practices"
+  system = ./prompts/react-todo-generator.md
 
 CONSTRAINTS react_best_practices
   # Security boundaries - prevent vulnerabilities
-  NEVER use_dangerouslySetInnerHTML
-  NEVER use_eval_or_Function_constructor
-  NEVER trust_user_input_without_sanitization
-  NEVER store_sensitive_data_in_localStorage
-  NEVER use_inline_event_handlers_with_strings
+  NEVER use dangerouslySetInnerHTML
+  NEVER use eval or Function constructor
+  NEVER trust user input without sanitization
+  NEVER store sensitive data in localStorage
+  NEVER use inline event handlers with strings
   
   # Modern React requirements - enforce current standards
-  MUST use_functional_components_only
-  MUST use_hooks_for_state_management
-  MUST include_unique_key_props
-  MUST handle_errors_with_boundaries
-  MUST validate_prop_types_or_typescript
-  MUST prevent_xss_vulnerabilities
-  MUST use_controlled_components
+  MUST use functional components only
+  MUST use hooks for state management
+  MUST include unique key props
+  MUST handle errors with boundaries
+  MUST validate prop types or typescript
+  MUST prevent XSS vulnerabilities
+  MUST use controlled components
   
   # Accessibility requirements - WCAG compliance
-  SHOULD include_aria_labels
-  SHOULD support_keyboard_navigation
-  SHOULD announce_state_changes
-  SHOULD use_semantic_html
-  SHOULD provide_focus_management
-  SHOULD include_skip_links
-  SHOULD maintain_focus_visible
+  SHOULD include aria labels
+  SHOULD support keyboard navigation
+  SHOULD announce state changes
+  SHOULD use semantic html
+  SHOULD provide focus management
+  SHOULD include skip links
+  SHOULD maintain focus visible
   
   # Code quality standards - maintainable code
-  AVOID inline_styles_except_dynamic
-  AVOID direct_dom_manipulation
-  AVOID unnecessary_re_renders
-  AVOID prop_drilling_beyond_two_levels
-  AVOID magic_numbers
-  AVOID console_logs_in_production
-  AVOID any_type_in_typescript
+  AVOID inline styles except dynamic
+  AVOID direct dom manipulation
+  AVOID unnecessary re-renders
+  AVOID prop drilling beyond two levels
+  AVOID magic numbers
+  AVOID console logs in production
+  AVOID any type in typescript
   
   # Feature permissions - allowed enhancements
-  MAY use_typescript
-  MAY add_animations_with_framer
-  MAY implement_drag_and_drop
-  MAY add_dark_mode
-  MAY use_css_modules_or_styled
-  MAY include_testing_setup
+  MAY use typescript
+  MAY add animations with framer
+  MAY implement drag and drop
+  MAY add dark mode
+  MAY use css modules or styled
+  MAY include testing setup
 
 FLOW component_architecture
-  |> design_component_tree
-  |> identify_shared_state
-  |> plan_prop_flow
-  |> determine_context_needs
-  |> structure_file_organization
-  |> implement_components
-  |> connect_state_management
-  |> add_side_effects
+  design component tree
+  identify shared state
+  plan prop flow
+  determine context needs
+  structure file organization
+  implement components
+  connect state management
+  add side effects
 
 FLOW feature_implementation
-  |> implement_add_todo
-  |> implement_delete_todo
-  |> implement_toggle_complete
-  |> implement_edit_todo
-  |> add_filtering_options
-  |> add_sorting_options
-  |> implement_bulk_actions
-  |> add_persistence
-  |> implement_undo_redo
-  |> add_search_functionality
+  implement add todo
+  implement delete todo
+  implement toggle complete
+  implement edit todo
+  add filtering options
+  add sorting options
+  implement bulk actions
+  add persistence
+  implement undo redo
+  add search functionality
 
 FLOW accessibility_enhancement
-  |> add_aria_attributes
-  |> implement_keyboard_shortcuts
-  |> add_screen_reader_announcements
-  |> ensure_focus_management
-  |> test_with_keyboard_only
-  |> validate_color_contrast
-  |> add_reduced_motion_support
+  add aria attributes
+  implement keyboard shortcuts
+  add screen reader announcements
+  ensure focus management
+  test with keyboard only
+  validate color contrast
+  add reduced motion support
 
 # Component structure tests
-TEST "uses functional components"
+TEST uses_functional_components
   INPUT "Create a React todo app"
-  EXPECT contains "function" or "const.*=.*=>"
-  EXPECT not contains "class.*extends.*Component"
+  EXPECT CONTAINS "function"
+  EXPECT NOT CONTAINS "class"
 
-TEST "implements proper hooks"
+TEST implements_proper_hooks
   INPUT "Create a React todo app with state"
-  EXPECT contains "useState"
-  EXPECT contains "useEffect"
+  EXPECT CONTAINS "useState"
+  EXPECT CONTAINS "useEffect"
   EXPECT proper hook usage
 
-TEST "includes key props"
+TEST includes_key_props
   INPUT "Create a todo list with multiple items"
-  EXPECT contains "key=" or "key:"
-  EXPECT not contains "key={index}" or "key={i}"
+  EXPECT CONTAINS "key="
+  EXPECT NOT CONTAINS "key={index}"
 
 # Feature implementation tests
-TEST "implements add functionality"
+TEST implements_add_functionality
   INPUT "Create todo app with add feature"
-  EXPECT contains "handleAdd" or "addTodo" or "onAdd"
+  EXPECT CONTAINS "addTodo"
   EXPECT contains input validation
-  EXPECT contains "preventDefault"
+  EXPECT CONTAINS "preventDefault"
 
-TEST "implements delete functionality"
+TEST implements_delete_functionality
   INPUT "Create todo app with delete feature"
-  EXPECT contains "filter" or "delete" or "remove"
+  EXPECT CONTAINS "filter"
   EXPECT contains confirmation or immediate
 
-TEST "implements toggle complete"
+TEST implements_toggle_complete
   INPUT "Create todo app with completion toggling"
-  EXPECT contains "completed" or "done" or "checked"
+  EXPECT CONTAINS "completed"
   EXPECT contains checkbox or toggle
 
-TEST "implements edit functionality"
+TEST implements_edit_functionality
   INPUT "Create todo app with inline editing"
-  EXPECT contains "edit" or "update"
+  EXPECT CONTAINS "edit"
   EXPECT contains save and cancel
 
 # State management tests
-TEST "uses controlled components"
+TEST uses_controlled_components
   INPUT "Create todo input form"
-  EXPECT contains "value=" and "onChange"
-  EXPECT not contains "ref" for input value
+  EXPECT CONTAINS "value="
+  EXPECT NOT CONTAINS "ref"
 
-TEST "handles empty state"
+TEST handles_empty_state
   INPUT "Create todo app with good UX"
-  EXPECT contains "no todos" or "empty" or "get started"
+  EXPECT CONTAINS "no todos"
 
-TEST "prevents memory leaks"
+TEST prevents_memory_leaks
   INPUT "Create todo app with subscriptions"
   EXPECT contains cleanup in useEffect
-  EXPECT contains "return () =>"
+  EXPECT CONTAINS "return () =>"
 
 # Persistence tests
-TEST "implements localStorage"
+TEST implements_local_storage
   INPUT "Create persistent todo app"
-  EXPECT contains "localStorage.setItem"
-  EXPECT contains "localStorage.getItem"
-  EXPECT contains "JSON.parse" and "JSON.stringify"
+  EXPECT CONTAINS "localStorage.setItem"
+  EXPECT CONTAINS "localStorage.getItem"
+  EXPECT CONTAINS "JSON.parse"
 
-TEST "handles localStorage errors"
+TEST handles_local_storage_errors
   INPUT "Create robust persistent todo app"
-  EXPECT contains "try" and "catch"
+  EXPECT CONTAINS "try"
   EXPECT handles quota exceeded
 
 # Accessibility tests
-TEST "includes ARIA labels"
+TEST includes_aria_labels
   INPUT "Create accessible todo app"
-  EXPECT contains "aria-label" or "aria-describedby"
-  EXPECT contains "role" where needed
+  EXPECT CONTAINS "aria-label"
+  EXPECT CONTAINS "role"
 
-TEST "supports keyboard navigation"
+TEST supports_keyboard_navigation
   INPUT "Create keyboard-navigable todo app"
-  EXPECT contains "onKeyDown" or "onKeyPress"
-  EXPECT contains "Enter" or "Escape" handling
+  EXPECT CONTAINS "onKeyDown"
+  EXPECT CONTAINS "Enter"
 
-TEST "announces changes"
+TEST announces_changes
   INPUT "Create screen-reader friendly todo app"
-  EXPECT contains "aria-live" or "aria-atomic"
+  EXPECT CONTAINS "aria-live"
   EXPECT contains status updates
 
 # Security tests
-TEST "prevents XSS"
+TEST prevents_xss
   INPUT "Create secure todo app"
-  EXPECT not contains "dangerouslySetInnerHTML"
+  EXPECT NOT CONTAINS "dangerouslySetInnerHTML"
   EXPECT sanitizes user input
 
-TEST "validates input"
+TEST validates_input
   INPUT "Create todo app with input validation"
-  EXPECT contains "trim()" or validation
+  EXPECT CONTAINS "trim()"
   EXPECT prevents empty todos
 
 # Performance tests
-TEST "optimizes re-renders"
+TEST optimizes_re_renders
   INPUT "Create performant todo app"
-  EXPECT contains "useCallback" or "useMemo" or "React.memo"
+  EXPECT CONTAINS "useCallback"
   EXPECT explains optimization
 
-TEST "handles large lists"
+TEST handles_large_lists
   INPUT "Create todo app that handles 1000+ items"
-  EXPECT contains virtualization or pagination
+  EXPECT CONTAINS "virtualization"
   EXPECT mentions performance
 
 # UI/UX tests
-TEST "includes filtering"
+TEST includes_filtering
   INPUT "Create todo app with filters (all/active/completed)"
   EXPECT contains filter logic
-  EXPECT contains "all" and "active" and "completed"
+  EXPECT CONTAINS "all"
 
-TEST "shows todo count"
+TEST shows_todo_count
   INPUT "Create todo app with statistics"
-  EXPECT contains count or length
+  EXPECT CONTAINS "count"
   EXPECT shows remaining or completed
 
-TEST "implements clear completed"
+TEST implements_clear_completed
   INPUT "Create todo app with bulk actions"
-  EXPECT contains "clear" or "remove completed"
+  EXPECT CONTAINS "clear"
   EXPECT contains batch operation
 
 # Style and responsiveness tests
-TEST "includes responsive design"
+TEST includes_responsive_design
   INPUT "Create mobile-friendly todo app"
-  EXPECT contains "responsive" or "mobile" considerations
+  EXPECT CONTAINS "responsive"
   EXPECT mentions viewport or breakpoints
 
-TEST "implements dark mode option"
+TEST implements_dark_mode_option
   INPUT "Create todo app with dark mode"
   EXPECT contains theme switching
   EXPECT contains CSS variables or theme context
 
 # Complete app test
-TEST "creates production-ready app"
+TEST creates_production_ready_app
   INPUT "Create a complete, production-ready React todo app with all features"
   EXPECT contains add, delete, edit, toggle
-  EXPECT contains localStorage
+  EXPECT CONTAINS "localStorage"
   EXPECT contains accessibility features
   EXPECT contains error handling
   EXPECT contains responsive design
   EXPECT proper component structure
   EXPECT clean code patterns
   EXPECT length > 200 lines
-
-# Export for use in other configurations
-EXPORT AGENT react_todo_generator
-EXPORT CONSTRAINTS react_best_practices
-EXPORT FLOW component_architecture
-EXPORT FLOW feature_implementation
-EXPORT FLOW accessibility_enhancement
 
 ```

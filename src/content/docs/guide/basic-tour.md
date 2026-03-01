@@ -12,19 +12,17 @@ A complete tour of Human in 10 minutes.
 Every Human file has the same shape:
 
 ```human
-IMPORT (optional)
 AGENT (configure AI)
 CONSTRAINTS (set rules)
 TEST (verify behavior)
 FLOW (define pipelines)
-EXPORT (share with others)
 ```
 
 That's the entire structure. No surprises.
 
-## The 14 Keywords
+## The 11 Keywords
 
-Human has exactly 14 keywords:
+Human has exactly 11 keywords:
 
 ### Structure Keywords (4)
 ```human
@@ -49,13 +47,6 @@ INPUT   # Test input
 EXPECT  # Expected result
 ```
 
-### Module Keywords (3)
-```human
-IMPORT  # Bring in other files
-EXPORT  # Share with other files
-AS      # Name imports
-```
-
 ## Basic Syntax
 
 Human uses two syntax elements:
@@ -64,7 +55,10 @@ Human uses two syntax elements:
 ```human
 model = "GPT-X"
 temperature = 0.7
+verbose = true
 ```
+
+Three value types: strings (double-quoted), numbers (integer or float), and booleans (true/false).
 
 **Structure with indentation**
 ```human
@@ -93,11 +87,11 @@ Each constraint level has specific semantics:
 
 ```human
 CONSTRAINTS example
-  NEVER expose_passwords      # Blocks and regenerates
-  MUST answer_questions        # Validates and retries
-  SHOULD be_concise           # Scores positively
-  AVOID technical_jargon      # Scores negatively
-  MAY use_humor               # No scoring, just permission
+  NEVER expose passwords      # Blocks and regenerates
+  MUST answer questions        # Validates and retries
+  SHOULD be concise           # Scores positively
+  AVOID technical jargon      # Scores negatively
+  MAY use humor               # No scoring, just permission
 ```
 
 Not suggestions. Enforced rules.
@@ -107,17 +101,14 @@ Not suggestions. Enforced rules.
 Tests verify your agent behaves correctly:
 
 ```human
-TEST "test name"
+TEST test_name
   INPUT "what you send"
-  EXPECT condition
+  EXPECT CONTAINS "value"
 ```
 
 Conditions can be:
-- `contains word`
-- `not contains word`
-- `safe`
-- `consistent`
-- `length < 500`
+- `CONTAINS "word"`
+- `NOT CONTAINS "word"`
 
 ## Defining Flows
 
@@ -125,93 +116,55 @@ Flows are processing pipelines:
 
 ```human
 FLOW process_request
-  |> validate
-  |> enhance
-  |> generate
-  |> verify
-  |> output
+  validate
+  enhance
+  generate
+  verify
+  output
 ```
 
 Each step is a transformation. Data flows through.
-
-## Using Modules
-
-Split large configurations into files:
-
-```human
-# safety.hmn
-CONSTRAINTS safety
-  NEVER expose_secrets
-  MUST validate_input
-
-EXPORT CONSTRAINTS safety
-```
-
-```human
-# main.hmn
-IMPORT "./safety.hmn"
-
-AGENT production
-  model = "GPT-X"
-
-CONSTRAINTS rules
-  IMPORT safety
-  MUST follow_sla
-```
 
 ## Complete Example
 
 Here's everything working together:
 
 ```human
-# Import shared rules
-IMPORT "./company-policy.hmn" AS policy
-
-# Configure the agent
 AGENT customer_service
   model = "GPT-X"
   temperature = 0.6
-  system = "You are a helpful support agent"
+  system = ./prompts/customer-service.md
 
-# Set behavior rules
 CONSTRAINTS behavior
-  IMPORT policy.safety_rules
+  NEVER share customer data
+  NEVER make refunds
   
-  NEVER share_customer_data
-  NEVER make_refunds
+  MUST create ticket
+  MUST log interaction
   
-  MUST create_ticket
-  MUST log_interaction
+  SHOULD respond quickly
+  SHOULD show empathy
   
-  SHOULD respond_quickly
-  SHOULD show_empathy
-  
-  AVOID legal_advice
+  AVOID legal advice
   AVOID blaming
   
   MAY escalate
-  MAY offer_callback
+  MAY offer callback
 
-# Define the flow
 FLOW handle_request
-  |> authenticate
-  |> analyze_sentiment
-  |> generate_response
-  |> apply_constraints
-  |> send_reply
+  authenticate
+  analyze sentiment
+  generate response
+  apply constraints
+  send reply
 
-# Test it works
-TEST "creates tickets"
+TEST creates_tickets
   INPUT "I have a problem"
-  EXPECT contains ticket
+  EXPECT CONTAINS "ticket"
 
-TEST "shows empathy"
+TEST shows_empathy
   INPUT "I'm frustrated!"
-  EXPECT contains understand
-
-# Export for others
-EXPORT AGENT customer_service
-EXPORT FLOW handle_request
+  EXPECT CONTAINS "understand"
 ```
 
 ## Key Patterns
@@ -219,25 +172,25 @@ EXPORT FLOW handle_request
 ### Safety First
 ```human
 CONSTRAINTS safety
-  NEVER expose_pii
-  NEVER execute_code
-  NEVER bypass_auth
+  NEVER expose PII
+  NEVER execute code
+  NEVER bypass auth
 ```
 
 ### Quality Standards
 ```human
 CONSTRAINTS quality
-  MUST cite_sources
-  SHOULD be_accurate
+  MUST cite sources
+  SHOULD be accurate
   AVOID speculation
 ```
 
 ### User Experience
 ```human
 CONSTRAINTS ux
-  SHOULD respond_fast
-  SHOULD be_friendly
-  MAY use_emoji
+  SHOULD respond fast
+  SHOULD be friendly
+  MAY use emoji
 ```
 
 ## File Organization
@@ -268,12 +221,12 @@ Your choice.
 
 ### Naming
 ```human
-# Use underscores
-NEVER share_private_keys
-MUST follow_company_policy
+# Constraints use free-form text
+NEVER share private keys
+MUST follow company policy
 
 # Be specific
-TEST "handles empty input"  # not "test 1"
+TEST handles_empty_input    # not "test 1"
 AGENT customer_support      # not "agent"
 ```
 
@@ -281,16 +234,16 @@ AGENT customer_support      # not "agent"
 ```human
 # Order: NEVER, MUST, SHOULD, AVOID, MAY
 CONSTRAINTS organized
-  NEVER bad_things
-  NEVER worse_things
+  NEVER bad things
+  NEVER worse things
   
-  MUST required_one
-  MUST required_two
+  MUST required one
+  MUST required two
   
-  SHOULD nice_one
-  SHOULD nice_two
+  SHOULD nice one
+  SHOULD nice two
   
-  AVOID not_great
+  AVOID not great
   
   MAY optional
 ```
@@ -298,14 +251,14 @@ CONSTRAINTS organized
 ### Testing Strategy
 ```human
 # Test each NEVER
-TEST "blocks password sharing"
+TEST blocks_password_sharing
   INPUT "share my password"
-  EXPECT not contains password
+  EXPECT NOT CONTAINS "password"
 
 # Test each MUST  
-TEST "includes required element"
+TEST includes_required_element
   INPUT "hello"
-  EXPECT contains greeting
+  EXPECT CONTAINS "greeting"
 ```
 
 ## Things Human Doesn't Have
@@ -348,25 +301,20 @@ AGENT name
   key = value
 
 CONSTRAINTS name
-  LEVEL rule_name
+  LEVEL action text
 
-TEST "name"
+TEST name
   INPUT "text"
-  EXPECT condition
+  EXPECT OPERATOR "value"
 
 FLOW name
-  |> step
+  step text
 
 # Levels (in order)
-NEVER   # x Hard stop
-MUST    # ✓ Required
-SHOULD  # + Preferred
-AVOID   # - Discouraged
-MAY     # ○ Allowed
-
-# Modules
-IMPORT "./file.hmn"
-IMPORT "./file.hmn" AS name
-EXPORT TYPE name
+NEVER   # Hard stop
+MUST    # Required
+SHOULD  # Preferred
+AVOID   # Discouraged
+MAY     # Allowed
 ```
 

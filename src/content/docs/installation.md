@@ -43,9 +43,9 @@ While you wait for tooling, you can use Human patterns right now:
 # Read Human configuration in Python
 config = """
 CONSTRAINTS safety
-  NEVER share_passwords
-  MUST be_helpful
-  SHOULD be_concise
+  NEVER share passwords
+  MUST be helpful
+  SHOULD be concise
 """
 
 # Parse it yourself (it's just indented text)
@@ -155,11 +155,11 @@ Example workflow:
 # Document your AI rules
 cat > company-ai-policy.hmn << 'EOF'
 CONSTRAINTS company_policy
-  NEVER expose_customer_data
-  NEVER make_legal_claims
-  MUST follow_gdpr
-  SHOULD be_helpful
-  AVOID technical_jargon
+  NEVER expose customer data
+  NEVER make legal claims
+  MUST follow GDPR
+  SHOULD be helpful
+  AVOID technical jargon
 EOF
 
 # Version it
