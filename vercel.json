@@ -2,6 +2,9 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/", "destination": "/intro", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
