@@ -84,6 +84,8 @@ The same capture mode applies to indented lines inside `FLOW` blocks. Each inden
 
 This is why `MUST respond within 30 seconds` works without the lexer trying to parse `30` as an integer. The lexer knows -- because it just emitted `MUST` -- that the rest of the line is prose.
 
+For the full specification including worked token examples, edge cases, and FLOW body handling, see the [Lexer reference](/reference/lexer).
+
 ## Comments
 
 **Rule:** `#` is a comment only when it is the first non-whitespace character on a line.

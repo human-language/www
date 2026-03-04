@@ -59,7 +59,7 @@ CONSTRAINTS rules
   MAY escalate to human
 ```
 
-After emitting one of these keywords, the lexer switches to capture mode. Everything from the keyword to the end of the line is emitted as a single text token. Numbers, `#`, `$`, `>`, parentheses -- all literal prose. The parser does not tokenize the rest of the line.
+After emitting one of these keywords, the lexer switches to capture mode. Everything from the keyword to the end of the line is emitted as a single text token. Numbers, `#`, `$`, `>`, parentheses -- all literal prose. The parser does not tokenize the rest of the line. See the [Lexer reference](/reference/lexer) for the full modal lexing specification, worked token examples, and edge cases.
 
 Resolution order when constraints conflict: NEVER > MUST > SHOULD > AVOID > MAY.
 

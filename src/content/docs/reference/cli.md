@@ -2,7 +2,7 @@
 title: "CLI Reference"
 description: ""
 sidebar:
-  order: 3
+  order: 4
 ---
 
 The `human` command line tool.

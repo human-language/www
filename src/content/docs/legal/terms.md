@@ -4,7 +4,7 @@ description: "Terms of Service for Human programming language"
 lastUpdated: 2024-01-01
 ---
 
-*The last language you'll ever write.*
+*The last language you'll need ever write.*
 
 ## Nature of Agreement
 By using human, you accept responsibility for what you create. This is a tool of significant power. Use it wisely.
