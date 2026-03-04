@@ -32,7 +32,7 @@ Doug McIlroy, the inventor of Unix pipes, once said: "Write programs that do one
 
 Human embodies this minimalism:
 
-- **11 keywords** - Not 140. Not 1400. Just what's needed.
+- **16 keywords** - Not 140. Not 1400. Just what's needed.
 - **5 constraint levels** - Complete semantic coverage, no redundancy.
 - **No syntax sugar** - Indentation and assignment. That's it.
 - **600 lines of code** - You could read the entire implementation in an hour.
@@ -223,7 +223,7 @@ This is engineering. Not the syntax, but the thinking.
 
 ## In Conclusion
 
- Can we configure complex AI behavior with just 11 keywords? Can we make safety rules as simple as a shopping list? Can we build something that lasts?
+ Can we configure complex AI behavior with just 16 keywords? Can we make safety rules as simple as a shopping list? Can we build something that lasts?
 
 I think so.
 

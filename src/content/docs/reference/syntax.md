@@ -31,6 +31,32 @@ support-v2    — hyphen not allowed
 
 Why underscores and not hyphens: identifiers must be unambiguous single tokens. Hyphens create parsing ambiguity in languages that also have subtraction or flags. Underscores never do.
 
+## Indentation
+
+Indentation is significant. The lexer emits `INDENT` and `DEDENT` tokens, like Python.
+
+**Rule:** 2 spaces per level. Tabs are rejected. Mixed tabs and spaces are a parse error.
+
+```human
+CONSTRAINTS safety        # level 0
+  NEVER share data        # level 1 (INDENT emitted before NEVER)
+  MUST be helpful         # level 1 (same level, no token)
+
+FLOW pipeline             # level 0 (DEDENT emitted before FLOW)
+  validate input          # level 1 (INDENT emitted)
+  process request         # level 1
+```
+
+The lexer maintains an indentation stack. When a line's leading spaces exceed the top of the stack, an `INDENT` token is emitted and the new level is pushed. When a line's leading spaces are less than the top, one or more `DEDENT` tokens are emitted until the stack matches. At end of file, `DEDENT` tokens are emitted for every remaining level on the stack.
+
+Tabs (0x09) are legal in the ASCII character set but not legal as indentation. The lexer rejects any tab that appears before the first non-whitespace character on a line:
+
+```
+support.hmn:4:1: error: tabs not allowed for indentation — use 2 spaces
+```
+
+Why not tabs: tabs have ambiguous visual width. Two spaces is unambiguous and matches every example in the language.
+
 ## Free-Form Text
 
 Everything after a constraint keyword (NEVER/MUST/SHOULD/AVOID/MAY) to the end of the line. Everything on an indented line inside a FLOW block. This is prose -- natural language that gets passed through to the AI.
@@ -49,6 +75,14 @@ SHOULD greet user by name (if known)
 ```
 
 All valid. The parser doesn't interpret free-form text -- it stores it verbatim. Numbers, `#`, `>`, `%`, `$`, parentheses -- all literal.
+
+### Lexer Mode Switch
+
+After emitting a constraint keyword (`NEVER`, `MUST`, `SHOULD`, `AVOID`, `MAY`), the lexer switches to capture mode. It reads from the keyword to the end of the line and emits everything after the keyword as a single `TEXT` token. No further tokenization happens on that line -- `30` is not a number literal, `#SUP` is not a comment, `>95%` is not a comparison.
+
+The same capture mode applies to indented lines inside `FLOW` blocks. Each indented line is emitted as a single `TEXT` token representing a pipeline step.
+
+This is why `MUST respond within 30 seconds` works without the lexer trying to parse `30` as an integer. The lexer knows -- because it just emitted `MUST` -- that the rest of the line is prose.
 
 ## Comments
 
@@ -82,7 +116,7 @@ Why no inline comments: inline `#` creates ambiguity with free-form text. `MUST 
 
 ## Quoted Strings
 
-Used in TEST INPUT values, EXPECT values, and SYSTEM paths.
+Used in TEST INPUT values and EXPECT values.
 
 **Rule:** Everything between `"` and `"` is literal. Backslash escapes: `\"` for a literal quote, `\\` for a literal backslash.
 
@@ -118,7 +152,7 @@ Only two values: `true`, `false`. Not `yes`/`no`, not `on`/`off`, not `1`/`0`.
 
 ## File Paths
 
-Used in SYSTEM and IMPORT for referencing files.
+Used in SYSTEM and IMPORT for referencing external files.
 
 **Rule:** Starts with `./` or `../`. No quotes. Extends to end of line.
 
@@ -130,12 +164,14 @@ IMPORT ../shared/common.hmn
 
 The path is stored as-is. The compiler resolves it relative to the current `.hmn` file's directory.
 
+`SYSTEM` always takes a file path. Inline strings are not accepted -- `SYSTEM "You are helpful"` is a parse error. The system prompt belongs in an external file so that `.hmn` files stay purely structural.
+
 ## Reserved Characters
 
 | Character | Meaning | Where |
 |---|---|---|
 | `#` | Comment (line-start only) | First non-whitespace on a line |
-| `"` | String delimiter | INPUT, EXPECT, SYSTEM values |
+| `"` | String delimiter | INPUT, EXPECT values |
 | `=` | Property assignment | Inside AGENT blocks |
 | `\` | Escape character | Inside quoted strings |
 | `./` `../` | File path prefix | SYSTEM, IMPORT |

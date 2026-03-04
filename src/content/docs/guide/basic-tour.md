@@ -20,9 +20,9 @@ FLOW (define pipelines)
 
 That's the entire structure. No surprises.
 
-## The 11 Keywords
+## The 16 Keywords
 
-Human has exactly 11 keywords:
+Human has exactly 16 keywords:
 
 ### Structure Keywords (4)
 ```human
@@ -30,6 +30,12 @@ AGENT       # Define an AI agent
 CONSTRAINTS # Define behavior rules
 TEST        # Test the behavior
 FLOW        # Process pipeline
+```
+
+### Module Keywords (2)
+```human
+SYSTEM  # Reference a system prompt file
+IMPORT  # Import another .hmn file
 ```
 
 ### Constraint Levels (5)
@@ -41,10 +47,17 @@ AVOID   # Discouraged behavior
 MAY     # Explicit permission
 ```
 
-### Test Keywords (2)
+### Test I/O Keywords (2)
 ```human
 INPUT   # Test input
 EXPECT  # Expected result
+```
+
+### Test Operator Keywords (3)
+```human
+NOT      # Negation modifier
+CONTAINS # Substring assertion
+MATCHES  # Regex assertion
 ```
 
 ## Basic Syntax
@@ -73,7 +86,7 @@ No brackets. No commas. No semicolons.
 
 ```human
 AGENT assistant
-SYSTEM "You are helpful"
+SYSTEM ./prompts/assistant.md
 ```
 
 Two lines. That's a complete agent.
@@ -120,7 +133,7 @@ FLOW process_request
   output
 ```
 
-Each step is a transformation. Data flows through.
+Each step is a transformation. Data flows through. Each indented line inside a FLOW block is captured as free-form text, not tokenized -- the same modal lexing that applies to constraint prose.
 
 ## Complete Example
 

@@ -22,13 +22,11 @@ That's a complete, working AI configuration. No frameworks. No messy paragraphs.
 
 ## The Problem
 
-Right now, if you want to control AI behavior, you need to:
-- Write complex prompt engineering
-- Build retry logic and safety checks
-- Hope your instructions stick
-- Repeat everything for each new use case
-
-There's no standard way to say "never do X" or "always do Y" that actually works.
+There is no standard, portable format for expressing behavioral constraints on AI agents. Each framework invents its own. So if you want to control AI behavior today, you end up:
+- Writing ad-hoc prompt engineering per project
+- Building retry logic and safety checks from scratch
+- Repeating the same rules for each new use case
+- Hoping your instructions survive across models and providers
 
 ## How Human Works
 
@@ -97,13 +95,14 @@ Let me look into this right away...
 
 ## The Entire Language
 
-Human has 13 keywords total:
+Human has 16 keywords total:
 
 ```
 AGENT       CONSTRAINTS     TEST        FLOW
 SYSTEM      IMPORT
 NEVER       MUST           SHOULD       AVOID       MAY
 INPUT       EXPECT
+NOT         CONTAINS       MATCHES
 ```
 
 Everything else is just names, values, and free-form text.
@@ -114,7 +113,7 @@ Human is experimental. The language spec is stable, but we're building tooling:
 
 - Hand-written lexer for tokens
 - Recursive descent parser 
-- Direct parse to structs (no AST)
+- Direct parse to typed structures
 - Simple error messages with line numbers
 
 You don't need our tools to use Human. It's just text. But tools make it better.

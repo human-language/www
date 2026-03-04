@@ -53,59 +53,6 @@ CONSTRAINTS safety
 
 The patterns work regardless of tooling. The constraints are universal.
 
-## Works in Any Language
-
-Human keywords work in any language. The five levels are universal:
-
-```human
-# Japanese safety rules
-CONSTRAINTS 安全規則
-  決して 個人情報_公開
-  決して パスワード_共有
-  決して 有害コンテンツ_生成
-  必須 質問_回答
-  必須 ユーザー_支援
-  必須 正確性_維持
-  推奨 簡潔_回答
-  推奨 例_提供
-  回避 専門用語
-  回避 推測
-  許可 ユーモア_使用
-
-# German quality standards  
-CONSTRAINTS Qualitätsstandards
-  NIEMALS Kundendaten_weitergeben
-  NIEMALS Passwörter_zeigen
-  NIEMALS Schaden_verursachen
-  MUSS Fragen_beantworten
-  MUSS Datenschutz_einhalten
-  MUSS Protokoll_führen
-  SOLLTE präzise_sein
-  SOLLTE Beispiele_geben
-  VERMEIDEN Fachjargon
-  VERMEIDEN Spekulation
-  DARF Humor_verwenden
-  DARF Anfragen_ablehnen
-
-# French guidelines
-CONSTRAINTS Directives
-  JAMAIS exposer_mots_de_passe
-  JAMAIS partager_données_privées
-  JAMAIS générer_contenu_nuisible
-  DOIT répondre_questions
-  DOIT respecter_RGPD
-  DOIT créer_logs
-  DEVRAIT être_concis
-  DEVRAIT donner_exemples
-  DEVRAIT montrer_empathie
-  ÉVITER jargon_technique
-  ÉVITER promesses_légales
-  PEUT utiliser_humour
-  PEUT refuser_demandes
-```
-
-Keywords adapt to your language (決して/NIEMALS/JAMAIS = NEVER). Your rules, your language. This makes Human universal while keeping it readable for your team.
-
 ## Future Tooling (Coming Soon)
 
 We're building optional tools to make Human even better:
@@ -137,7 +84,7 @@ When tooling arrives, it will be:
 The implementation is deliberately simple:
 - Lexer
 - Recursive descent parser
-- Direct to structs (no AST)
+- Direct parse to typed structures
 - 600-800 lines of code total
 
 ## For Early Adopters
