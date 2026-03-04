@@ -337,6 +337,14 @@ starlight-menu-button {
   margin-right: 0.75rem;
 }
 
+.social-icons a {
+  color: #666 !important;
+}
+
+.social-icons a:hover {
+  color: #e0e0e0 !important;
+}
+
 /* ============================================================
    SIDEBAR
    ============================================================ */

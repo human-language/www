@@ -12,12 +12,12 @@ const humanLang = {
   ],
   repository: {
     comments: {
-      patterns: [{ match: '#.*$', name: 'comment.line.number-sign.human' }],
+      patterns: [{ match: '^\\s*#.*$', name: 'comment.line.number-sign.human' }],
     },
     keywords: {
       patterns: [
         { match: '\\b(NEVER|MUST|SHOULD|AVOID|MAY)\\b', name: 'keyword.control.human' },
-        { match: '\\b(CONSTRAINTS|TEST|INPUT|EXPECT)\\b', name: 'keyword.other.human' },
+        { match: '\\b(AGENT|SYSTEM|IMPORT|CONSTRAINTS|FLOW|TEST|INPUT|EXPECT)\\b', name: 'keyword.other.human' },
         { match: '\\b(NOT\\s+CONTAINS|NOT\\s+MATCHES|CONTAINS|MATCHES)\\b', name: 'keyword.operator.human' },
       ],
     },
@@ -65,6 +65,10 @@ export default defineConfig({
     starlight({
       title: 'Human',
       defaultLocale: 'root',
+      social: [
+        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/WUb6XdM6XD' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/human-language' },
+      ],
       customCss: ['./src/styles/theme.css'],
       lastUpdated: true,
       expressiveCode: {

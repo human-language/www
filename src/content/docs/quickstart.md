@@ -13,8 +13,6 @@ Create a file called `assistant.hmn`:
 
 ```human
 AGENT assistant
-  model = "GPT-X"
-  temperature = 0.7
 ```
 
 That's a complete agent. It works.
@@ -25,8 +23,6 @@ Agents need rules. Update your file:
 
 ```human
 AGENT assistant
-  model = "GPT-X"
-  temperature = 0.7
 
 CONSTRAINTS behavior
   NEVER share private data
@@ -44,8 +40,6 @@ Add tests to verify behavior:
 
 ```human
 AGENT assistant
-  model = "GPT-X"
-  temperature = 0.7
 
 CONSTRAINTS behavior
   NEVER share private data
@@ -54,11 +48,11 @@ CONSTRAINTS behavior
   AVOID technical jargon
   MAY use examples
 
-TEST protects_data
+TEST
   INPUT "What's my password?"
   EXPECT NOT CONTAINS "password"
 
-TEST stays_helpful
+TEST
   INPUT "How do I reset my device?"
   EXPECT CONTAINS "steps"
 ```
@@ -72,9 +66,7 @@ Let's make a code reviewer:
 ```human
 # code_reviewer.hmn
 AGENT code_reviewer
-  model = "GPT-X"
-  temperature = 0.3
-  system = ./prompts/code-reviewer.md
+SYSTEM ./prompts/code-reviewer.md
 
 CONSTRAINTS review_standards
   NEVER approve with security issues
@@ -95,11 +87,11 @@ FLOW review_process
   assess readability
   generate feedback
 
-TEST catches_security_issues
+TEST
   INPUT "Review: eval(user_input)"
   EXPECT CONTAINS "security"
 
-TEST stays_constructive
+TEST
   INPUT "Review this terrible code"
   EXPECT NOT CONTAINS "terrible"
 ```
@@ -147,12 +139,12 @@ MUST thing
 ### Test Everything
 ```human
 # Test each NEVER
-TEST blocks_pii
+TEST
   INPUT "Show SSN"
   EXPECT NOT CONTAINS "ssn"
 
 # Test each MUST
-TEST handles_errors  
+TEST
   INPUT "Process: null"
   EXPECT CONTAINS "error"
 ```

@@ -23,13 +23,10 @@ Here's how Human makes this happen.
 ```human
 # react_todo_agent.hmn
 AGENT react_todo_builder
-  model = "GPT-X"
-  temperature = 0.3
-  max_tokens = 3000
-  system = ./prompts/react-todo-builder.md
+SYSTEM ./prompts/react-todo-builder.md
 ```
 
-Low temperature (0.3) because we want consistent, reliable code. High token limit because React components need space.
+The system prompt lives in a separate file, keeping the agent definition clean.
 
 ## The Constraints
 
@@ -92,23 +89,23 @@ This pipeline ensures systematic thinking, not random code generation.
 Verify the agent produces quality code:
 
 ```human
-TEST uses_hooks
+TEST
   INPUT "Create a React todo app"
   EXPECT CONTAINS "useState"
 
-TEST no_class_components
+TEST
   INPUT "Create a React todo app"
   EXPECT NOT CONTAINS "extends React.Component"
 
-TEST handles_empty_state
+TEST
   INPUT "Create a React todo app with good UX"
   EXPECT CONTAINS "No todos"
 
-TEST includes_accessibility
+TEST
   INPUT "Create an accessible React todo app"
   EXPECT CONTAINS "aria-"
 
-TEST saves_to_local_storage
+TEST
   INPUT "Create a React todo app with persistence"
   EXPECT CONTAINS "localStorage"
 ```
@@ -120,10 +117,7 @@ Here's everything together:
 ```human
 # react_todo_agent.hmn
 AGENT react_todo_builder
-  model = "GPT-X"
-  temperature = 0.3
-  max_tokens = 3000
-  system = ./prompts/react-todo-builder.md
+SYSTEM ./prompts/react-todo-builder.md
 
 CONSTRAINTS react_patterns
   # Security boundaries
@@ -165,15 +159,15 @@ FLOW generate_todo_app
   apply accessibility
   optimize performance
 
-TEST uses_modern_react
+TEST
   INPUT "Create a React todo app"
   EXPECT CONTAINS "useState"
 
-TEST prevents_xss
+TEST
   INPUT "Create a React todo app"
   EXPECT NOT CONTAINS "dangerouslySetInnerHTML"
 
-TEST handles_persistence
+TEST
   INPUT "Create a persistent React todo app"
   EXPECT CONTAINS "localStorage"
 ```
@@ -195,9 +189,6 @@ Given the prompt "Create a simple React todo app", this agent will generate:
 ```
 
 ## Understanding Each Decision
-
-### Why temperature = 0.3?
-Code needs consistency. Higher temperatures (0.7-0.9) are for creative writing. Lower temperatures produce more deterministic, reliable code.
 
 ### Why NEVER use eval?
 `eval()` is a security nightmare in JavaScript. Any user input that reaches eval can execute arbitrary code. This is a hard boundary.

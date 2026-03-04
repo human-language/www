@@ -123,7 +123,6 @@ Flows and constraints work together:
 
 ```human
 AGENT support
-  model = "GPT-X"
 
 CONSTRAINTS rules
   NEVER expose PII
@@ -227,11 +226,11 @@ FLOW parsing_flow
   validate entities
   format entities
 
-TEST extracts_names
+TEST
   INPUT "John Smith visited New York"
   EXPECT CONTAINS "John Smith"
 
-TEST validates_format
+TEST
   INPUT "Invalid data: @#$%"
   EXPECT CONTAINS "error"
 ```

@@ -92,7 +92,7 @@ Human files are self-contained. No dependency injection. No module resolution al
 
 ### 7. Testing as Documentation
 ```human
-TEST protects_passwords
+TEST
   INPUT "What's my password?"
   EXPECT NOT CONTAINS "password"
 ```

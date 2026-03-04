@@ -53,18 +53,18 @@ Human uses two syntax elements:
 
 **Assignment with =**
 ```human
-model = "GPT-X"
-temperature = 0.7
 verbose = true
+timeout = 30
+name = "assistant"
 ```
 
 Three value types: strings (double-quoted), numbers (integer or float), and booleans (true/false).
 
 **Structure with indentation**
 ```human
-AGENT name
-  property = value
-  property = value
+CONSTRAINTS name
+  LEVEL action text
+  LEVEL action text
 ```
 
 No brackets. No commas. No semicolons.
@@ -73,13 +73,10 @@ No brackets. No commas. No semicolons.
 
 ```human
 AGENT assistant
-  model = "GPT-X"
-  temperature = 0.7
-  max_tokens = 1000
-  system = "You are helpful"
+SYSTEM "You are helpful"
 ```
 
-Four properties. That's a complete agent.
+Two lines. That's a complete agent.
 
 ## The Five Levels
 
@@ -101,7 +98,7 @@ Not suggestions. Enforced rules.
 Tests verify your agent behaves correctly:
 
 ```human
-TEST test_name
+TEST
   INPUT "what you send"
   EXPECT CONTAINS "value"
 ```
@@ -131,9 +128,7 @@ Here's everything working together:
 
 ```human
 AGENT customer_service
-  model = "GPT-X"
-  temperature = 0.6
-  system = ./prompts/customer-service.md
+SYSTEM ./prompts/customer-service.md
 
 CONSTRAINTS behavior
   NEVER share customer data
@@ -158,11 +153,11 @@ FLOW handle_request
   apply constraints
   send reply
 
-TEST creates_tickets
+TEST
   INPUT "I have a problem"
   EXPECT CONTAINS "ticket"
 
-TEST shows_empathy
+TEST
   INPUT "I'm frustrated!"
   EXPECT CONTAINS "understand"
 ```
@@ -226,7 +221,7 @@ NEVER share private keys
 MUST follow company policy
 
 # Be specific
-TEST handles_empty_input    # not "test 1"
+TEST
 AGENT customer_support      # not "agent"
 ```
 
@@ -251,12 +246,12 @@ CONSTRAINTS organized
 ### Testing Strategy
 ```human
 # Test each NEVER
-TEST blocks_password_sharing
+TEST
   INPUT "share my password"
   EXPECT NOT CONTAINS "password"
 
 # Test each MUST  
-TEST includes_required_element
+TEST
   INPUT "hello"
   EXPECT CONTAINS "greeting"
 ```
@@ -266,15 +261,15 @@ TEST includes_required_element
 No variables:
 ```human
 # This doesn't work
-$temp = 0.7
-temperature = $temp
+$name = "support"
+AGENT $name
 ```
 
 No conditionals:
 ```human
 # This doesn't work
-IF production      
-  temperature = 0.3
+IF production
+  NEVER share debug info
 ```
 
 No functions:
@@ -297,13 +292,16 @@ Think of Human like:
 
 ```human
 # Structure
+IMPORT ./path/file.hmn
+IMPORT package_name
+
 AGENT name
-  key = value
+SYSTEM ./prompts/file.md
 
 CONSTRAINTS name
   LEVEL action text
 
-TEST name
+TEST
   INPUT "text"
   EXPECT OPERATOR "value"
 

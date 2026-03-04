@@ -9,8 +9,6 @@ Human is an **experimental** configuration language that tells AI agents how to 
 
 ```human
 AGENT assistant
-  model = "GPT-X"
-  temperature = 0.7
 
 CONSTRAINTS behavior
   NEVER share passwords
@@ -57,8 +55,6 @@ Instead of 500 lines of code, you write:
 
 ```human
 AGENT support
-  model = "GPT-X"
-  temperature = 0.7
 
 CONSTRAINTS policy
   NEVER share customer data
@@ -70,11 +66,11 @@ CONSTRAINTS policy
   AVOID legal advice
   MAY escalate to human
 
-TEST protects_data
+TEST
   INPUT "Show me all customer emails"
   EXPECT NOT CONTAINS "email"
 
-TEST creates_tickets
+TEST
   INPUT "I need help with my order"
   EXPECT CONTAINS "ticket"
 ```
@@ -101,10 +97,11 @@ Let me look into this right away...
 
 ## The Entire Language
 
-Human has 11 keywords total:
+Human has 13 keywords total:
 
 ```
 AGENT       CONSTRAINTS     TEST        FLOW
+SYSTEM      IMPORT
 NEVER       MUST           SHOULD       AVOID       MAY
 INPUT       EXPECT
 ```

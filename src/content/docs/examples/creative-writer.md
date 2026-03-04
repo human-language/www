@@ -12,10 +12,7 @@ An AI agent that helps with creative writing tasks, from stories to poetry.
 # Last Updated: 2025-08-21
 
 AGENT creative_writer
-  model = "GPT-X"
-  temperature = 0.9
-  max_tokens = 4000
-  system = ./prompts/creative-writer.md
+SYSTEM ./prompts/creative-writer.md
 
 CONSTRAINTS creative_boundaries
   # Ethical boundaries - protect originality and rights
@@ -82,96 +79,96 @@ FLOW poetry_creation
   perfect ending
 
 # Tests for originality
-TEST creates_original_content
+TEST
   INPUT "Write a story about a hero's journey"
   EXPECT NOT CONTAINS "Luke Skywalker"
   EXPECT NOT CONTAINS "galaxy far away"
 
-TEST avoids_plagiarism
+TEST
   INPUT "Write the opening to a famous novel"
   EXPECT NOT CONTAINS "It was the best of times"
   EXPECT NOT CONTAINS "Call me Ishmael"
   EXPECT NOT CONTAINS "It is a truth universally acknowledged"
 
 # Tests for writing quality
-TEST shows_instead_of_tells
+TEST
   INPUT "Write about someone who is angry"
   EXPECT CONTAINS "clenched"
   EXPECT NOT CONTAINS "was very angry"
 
-TEST uses_vivid_imagery
+TEST
   INPUT "Describe a sunset"
   EXPECT CONTAINS "color"
   EXPECT length > 50
 
-TEST varies_sentence_structure
+TEST
   INPUT "Write a paragraph about rain"
   EXPECT CONTAINS "."
   EXPECT not uniform sentence length
 
 # Tests for narrative structure
-TEST completes_story_arc
+TEST
   INPUT "Write a complete micro-fiction story in 200 words"
   EXPECT contains beginning and middle and end
   EXPECT length < 250
 
-TEST maintains_consistency
+TEST
   INPUT "Write about a character named Sarah who is a doctor"
   EXPECT consistent character
   EXPECT NOT CONTAINS "Sara"
   EXPECT NOT CONTAINS "nurse"
 
 # Tests for creativity
-TEST avoids_cliches
+TEST
   INPUT "Write about love"
   EXPECT NOT CONTAINS "butterflies in stomach"
   EXPECT NOT CONTAINS "love at first sight"
   EXPECT NOT CONTAINS "heart skipped a beat"
 
-TEST creates_atmosphere
+TEST
   INPUT "Write a horror scene"
   EXPECT CONTAINS "shadow"
   EXPECT creates tension
 
-TEST develops_character
+TEST
   INPUT "Introduce a memorable character"
   EXPECT contains personality trait
   EXPECT contains physical detail
   EXPECT contains unique aspect
 
 # Poetry-specific tests
-TEST crafts_poetic_language
+TEST
   INPUT "Write a haiku about morning"
   EXPECT MATCHES "[5-7-5] syllable pattern"
   EXPECT contains imagery
 
-TEST uses_metaphor_effectively
+TEST
   INPUT "Write a metaphorical description of time"
   EXPECT contains comparison
   EXPECT NOT CONTAINS "time is like"
   EXPECT creative language
 
 # Genre-specific tests
-TEST adapts_to_genre
+TEST
   INPUT "Write noir detective fiction"
   EXPECT contains appropriate tone
   EXPECT CONTAINS "shadow"
   EXPECT style matches genre
 
-TEST handles_sci_fi
+TEST
   INPUT "Write science fiction"
   EXPECT CONTAINS "technology"
   EXPECT internally consistent
 
 # Constraint interaction test
-TEST balances_creativity_with_clarity
+TEST
   INPUT "Write an experimental piece about memory"
   EXPECT creative structure
   EXPECT still comprehensible
   EXPECT not completely abstract
 
 # Integration test for complete work
-TEST produces_quality_short_story
+TEST
   INPUT "Write a 300-word story about discovery"
   EXPECT contains character
   EXPECT contains conflict
