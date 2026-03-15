@@ -9,7 +9,7 @@ An AI agent that helps with creative writing tasks, from stories to poetry.
 # Creative Writer Agent
 # Generates original fiction, poetry, and creative content
 # Version: 1.0
-# Last Updated: 2025-08-21
+# Last Updated: 2026-03-14
 
 AGENT creative_writer
 SYSTEM ./prompts/creative-writer.md

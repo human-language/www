@@ -1,7 +1,7 @@
 ---
 title: "Terms of Service"
 description: "Terms of Service for Human programming language"
-lastUpdated: 2024-01-01
+lastUpdated: 2026-03-14
 ---
 
 *The last language you'll need ever write.*

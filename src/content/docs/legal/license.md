@@ -1,7 +1,7 @@
 ---
 title: "License"
 description: "License for Human programming language"
-lastUpdated: 2025-08-16
+lastUpdated: 2026-03-14
 ---
 
 Copyright (c) 2025 Human Language Contributors

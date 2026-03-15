@@ -9,7 +9,7 @@ A full-featured customer service bot with multi-turn conversations and issue res
 # Customer Service Agent
 # Handles customer inquiries, complaints, and support requests
 # Version: 1.0
-# Last Updated: 2025-08-21
+# Last Updated: 2026-03-14
 
 AGENT customer_service
 SYSTEM ./prompts/customer-service.md

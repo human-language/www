@@ -9,7 +9,7 @@ An AI assistant that provides thoughtful code reviews with constructive feedback
 # Code Reviewer Agent
 # Reviews code for security, quality, and best practices
 # Version: 1.0
-# Last Updated: 2025-08-21
+# Last Updated: 2026-03-14
 
 AGENT code_reviewer
 SYSTEM ./prompts/code-reviewer.md

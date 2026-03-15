@@ -1,7 +1,7 @@
 ---
 title: "Privacy Policy"
 description: "Privacy Policy for Human programming language"
-lastUpdated: 2024-01-01
+lastUpdated: 2026-03-14
 ---
 
 ## Data Collection
