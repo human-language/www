@@ -9,6 +9,7 @@ Human is an **experimental** configuration language that tells AI agents how to 
 
 ```human
 AGENT assistant
+SYSTEM ./prompts/assistant.md
 
 CONSTRAINTS behavior
   NEVER share passwords
