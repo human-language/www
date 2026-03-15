@@ -52,7 +52,8 @@ The lexer maintains an indentation stack. When a line's leading spaces exceed th
 Tabs (0x09) are legal in the ASCII character set but not legal as indentation. The lexer rejects any tab that appears before the first non-whitespace character on a line:
 
 ```
-support.hmn:4:1: error: tabs not allowed for indentation — use 2 spaces
+error[E103]: tabs not allowed for indentation -- use 2 spaces
+ --> support.hmn:4:1
 ```
 
 Why not tabs: tabs have ambiguous visual width. Two spaces is unambiguous and matches every example in the language.
@@ -187,7 +188,8 @@ Everything else is unreserved. No character has special meaning in free-form tex
 The parser rejects any byte outside this range:
 
 ```
-support.hmn:7:34: error: invalid character U+1F44B — .hmn files must be ASCII only
+error[E102]: invalid character U+1F44B -- .hmn files must be ASCII only
+ --> support.hmn:7:34
 ```
 
 `.hmn` files are configuration, not content. Every character should be typeable on a standard US keyboard. If you need unicode in your AI's instructions, put it in the referenced content file (Markdown, plain text) -- not in the `.hmn` file itself.

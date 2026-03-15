@@ -25,15 +25,19 @@ hmn validate main.hmn
 hmn validate agents/*.hmn
 ```
 
-Errors print to stderr in this format:
+Errors print to stderr with a structured error code:
 
 ```
-error: unknown import target: ./missing.hmn
-  --> main.hmn:2:8
-   |
- 2 | IMPORT ./missing.hmn
-   |        ^^^^^^^^^^^^^
+error[E301]: file not found: ./missing.hmn (resolved to /project/missing.hmn)
+ --> main.hmn:2:8
+  |
+2 | IMPORT ./missing.hmn
+  |        ^~~~~~~~~~~~~
+  |
+help: check the path; make sure the file exists
 ```
+
+See the [Error Reference](/reference/errors) for every error code.
 
 Exit codes:
 - `0` — all files valid

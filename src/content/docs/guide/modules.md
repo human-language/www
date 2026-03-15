@@ -85,21 +85,24 @@ TEST
 
 ## Errors
 
-The compiler catches these:
+The compiler catches these. See the [Error Reference](/reference/errors) for the full list.
 
-**Duplicate block names** — two files define the same block:
+**Duplicate block names** -- two files define the same block:
 ```
-support.hmn:3: error: duplicate block 'policy' — also defined in safety.hmn:1
-```
-
-**Circular imports** — file A imports B, B imports A:
-```
-a.hmn:1: error: circular import detected: a.hmn → b.hmn → a.hmn
+error[E305]: duplicate CONSTRAINTS block 'policy' -- also defined in safety.hmn
+ --> support.hmn:3:1
 ```
 
-**AGENT in non-main file** — only `main.hmn` declares an agent:
+**Circular imports** -- file A imports B, B imports A:
 ```
-helpers.hmn:1: error: AGENT can only appear in main.hmn
+error[E303]: circular import detected: a.hmn -> b.hmn -> a.hmn
+ --> a.hmn
+```
+
+**AGENT in non-main file** -- only `main.hmn` declares an agent:
+```
+error[E304]: AGENT can only appear in main.hmn
+ --> helpers.hmn:1:1
 ```
 
 ## Packages (Planned)
