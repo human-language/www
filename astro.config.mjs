@@ -50,7 +50,8 @@ export default defineConfig({
     '/docs/examples/creative-writer':  '/examples/creative-writer',
     '/docs/examples/customer-service': '/examples/customer-service',
     '/docs/examples/data-processor':   '/examples/data-processor',
-    '/docs/examples/react-todo-app':   '/examples/react-todo-app',
+    '/docs/examples/react-todo-app':        '/examples/react-todo-app',
+    '/docs/examples/multi-file-project':   '/examples/multi-file-project',
   },
   build: {
     format: 'directory',
@@ -144,6 +145,7 @@ export default defineConfig({
             { label: 'Creative Writer', link: '/examples/creative-writer' },
             { label: 'Customer Service', link: '/examples/customer-service' },
             { label: 'Data Processor', link: '/examples/data-processor' },
+            { label: 'Multi-File Project', link: '/examples/multi-file-project' },
             { label: 'React Todo App', link: '/examples/react-todo-app' },
           ],
         },
