@@ -5,172 +5,91 @@ sidebar:
   order: 2
 ---
 
-Human doesn't require installation. It's just text.
+Human is a plain-text format. You can write `.hmn` files in any editor without installing anything. But the tooling makes it better.
+
+## CLI (`hmn`)
+
+The `hmn` binary validates, compiles, and formats `.hmn` files. Install from source:
+
+```bash
+cargo install --path human/cli
+```
+
+Verify:
+
+```bash
+hmn --help
+```
+
+```
+usage: hmn <command> [flags] file...
+
+commands:
+  validate   check .hmn files for errors
+  compile    compile .hmn to prompt, json, yaml, toml, txt, hmn
+  fmt        normalize .hmn source formatting
+```
+
+Homebrew and npm packages are planned but not yet available.
+
+## VS Code Extension
+
+The `vscode-human` extension provides syntax highlighting and on-save diagnostics for `.hmn` files.
+
+Install from VSIX:
+
+1. Open VS Code or Cursor
+2. Open the Command Palette (`Cmd+Shift+P`)
+3. Run **Extensions: Install from VSIX...**
+4. Select the `human-language-0.1.0.vsix` file from the `vscode-human/` directory
+
+The extension runs `hmn validate` on save and reports errors inline.
 
 ## No Install Required
 
-Human is a plain-text configuration format. You can write it in:
-- Notepad
-- TextEdit  
-- Vim
-- VS Code
-- On paper (seriously)
+You don't need the CLI or extension to use Human. It's a plain-text configuration format. You can write it in Notepad, Vim, or on paper.
 
 ```human
-# This is valid Human, written anywhere
 AGENT helper
 
 CONSTRAINTS rules
   NEVER lie
   MUST help
-
 ```
 
-Save it as `.hmn` file. That's it. You've "installed" Human.
+Save it as a `.hmn` file. That's a valid Human configuration.
 
-## Why No Install?
-
-Human is a specification, not software. Like Markdown or JSON, it's a way of writing things down. You don't install Markdown—you just write it. Same with Human.
-
-Your AI provider reads Human files directly. No compiler needed. No runtime required. Just text that describes behavior.
-
-## Using Human Today
-
-While you wait for tooling, you can use Human patterns right now:
-
-```python
-# Read Human configuration in Python
-config = """
-CONSTRAINTS safety
-  NEVER share passwords
-  MUST be helpful
-  SHOULD be concise
-"""
-
-# Parse it yourself (it's just indented text)
-# Apply to your AI calls
-```
-
-The patterns work regardless of tooling. The constraints are universal.
-
-## Future Tooling (Coming Soon)
-
-We're building optional tools to make Human even better:
-
-```bash
-# One day soon
-brew install human
-human run agent.hmn
-human test safety.hmn
-```
-
-These tools will provide:
-- Syntax validation
-- Runtime enforcement
-- Testing framework
-- Editor support
-- Unix pipe integration
-
-But remember: you don't need these tools to use Human. They just make it nicer.
-
-## Language Implementation
-
-When tooling arrives, it will be:
-- Single binary (like `jq` or `ripgrep`)
-- No dependencies
-- Works everywhere Unix works
-- Under 1MB
-
-The implementation is deliberately simple:
-- Lexer
-- Recursive descent parser
-- Direct parse to typed structures
-- 600-800 lines of code total
-
-## For Early Adopters
-
-Want to use Human patterns today?
-
-1. **Write Human files** - Document your AI constraints
-2. **Version control them** - Check into git
-3. **Share with your team** - It's just text
-4. **Apply manually** - Use the patterns in your current setup
-
-Example workflow:
-```bash
-# Document your AI rules
-cat > company-ai-policy.hmn << 'EOF'
-CONSTRAINTS company_policy
-  NEVER expose customer data
-  NEVER make legal claims
-  MUST follow GDPR
-  SHOULD be helpful
-  AVOID technical jargon
-EOF
-
-# Version it
-git add company-ai-policy.hmn
-git commit -m "Add company AI policy"
-
-# Share it
-# Your team can read and understand it
-# Even without tooling
-```
-
-## Editor Support
-
-For now, treat `.hmn` files as plain text. Syntax highlighting coming soon for:
-- VS Code
-- Vim
-- Emacs
-- Sublime Text
-
-Until then, Python or YAML syntax highlighting works reasonably well.
+The CLI adds validation (`hmn validate`), compilation to various output formats (`hmn compile`), and source formatting (`hmn fmt`). The VS Code extension adds syntax highlighting and error reporting. But the format stands on its own.
 
 ## Platform Support
 
-Human (the specification) works everywhere text works:
-- macOS
-- Linux
-- Windows
-- BSD
-- Your phone
-- Paper notebooks
+Human (the specification) works everywhere text works.
 
-Human (the future tooling) will support:
+The `hmn` CLI currently builds from source via Cargo on:
 - macOS (arm64, x86_64)
 - Linux (arm64, x86_64)
 - Windows (x86_64)
-- FreeBSD (x86_64)
+
+Pre-built binaries are planned.
+
+## Tree-sitter Grammar
+
+A Tree-sitter grammar is available in `tree-sitter-human/` for editor plugin authors who want to build integrations beyond VS Code. It handles indentation-sensitive parsing via an external scanner and provides `highlights.scm` queries for syntax coloring.
 
 ## Getting Updates
 
-Human is experimental. Things will evolve.
-
-```bash
-# Future: Check version
-human --version
-
-# Future: Update
-human update
-```
-
-For now, watch the GitHub: [github.com/human-language](https://github.com/human-language)
+Human is experimental. Watch the GitHub for updates: [github.com/human-language](https://github.com/human-language)
 
 ## Questions
 
-**Q: Can I use Human today?**  
-A: Yes. It's just text. Write it, share it, use the patterns.
+**Q: Can I use Human without the CLI?**
+A: Yes. It's just text. Write it, share it, version control it.
 
-**Q: When will tools be ready?**  
+**Q: When will brew/npm packages be ready?**
 A: Follow the repo for updates.
 
-**Q: What if the spec changes?**  
+**Q: What if the spec changes?**
 A: The five constraint levels are permanent. Everything else might evolve.
 
-**Q: Can I contribute?**  
-A: Yes. The spec is open. The implementation will be too.
-
-Remember: Human is just text that describes AI behavior. You can start using it right now, with whatever tools you already have.
-
-*No installation required. Just intention.*
+**Q: Can I contribute?**
+A: Yes. The spec and implementation are open source.

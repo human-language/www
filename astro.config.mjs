@@ -135,7 +135,6 @@ export default defineConfig({
             { label: 'Keywords', link: '/reference/keywords' },
             { label: 'Lexer', link: '/reference/lexer' },
             { label: 'CLI', link: '/reference/cli' },
-            { label: 'Standard Library', link: '/reference/stdlib' },
           ],
         },
         {

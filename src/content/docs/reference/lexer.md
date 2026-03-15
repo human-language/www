@@ -99,14 +99,22 @@ FLOW                           (keyword)
 "mentorship_session"           (IDENTIFIER)
 NEWLINE
 INDENT
-"assess existing work"         (TEXT)
+"assess"                       (IDENTIFIER)
+"existing"                     (IDENTIFIER)
+"work"                         (IDENTIFIER)
 NEWLINE
-"identify current phase"       (TEXT)
+"identify"                     (IDENTIFIER)
+"current"                      (IDENTIFIER)
+"phase"                        (IDENTIFIER)
 NEWLINE
-"critique and question"        (TEXT)
+"critique"                     (IDENTIFIER)
+"and"                          (IDENTIFIER)
+"question"                     (IDENTIFIER)
 NEWLINE
 DEDENT
 ```
+
+The parser, knowing it is inside a `FLOW` block, concatenates the identifiers on each line back into a single step string.
 
 ### How the lexer knows
 
@@ -183,6 +191,7 @@ Spaces only, no tabs. Indentation is 2 spaces per level. The lexer emits INDENT/
 | NUMBER | `3`, `0.5`, `-1` | Digit sequence, optional dot/negative |
 | BOOLEAN | `true`, `false` | Exact lowercase match |
 | PATH | `./prompts/support.md` | Starts with `./` or `../` |
+| PACKAGE | `safety`, `@acme/rules` | After `IMPORT`, not a path |
 | EQUALS | `=` | Single character |
 | COMMENT | `# safety rules` | `#` as first non-whitespace |
 | INDENT | _(implicit)_ | Indentation increase |

@@ -80,7 +80,7 @@ All valid. The parser doesn't interpret free-form text -- it stores it verbatim.
 
 After emitting a constraint keyword (`NEVER`, `MUST`, `SHOULD`, `AVOID`, `MAY`), the lexer switches to capture mode. It reads from the keyword to the end of the line and emits everything after the keyword as a single `TEXT` token. No further tokenization happens on that line -- `30` is not a number literal, `#SUP` is not a comment, `>95%` is not a comparison.
 
-The same capture mode applies to indented lines inside `FLOW` blocks. Each indented line is emitted as a single `TEXT` token representing a pipeline step.
+`FLOW` body lines are handled differently. The lexer tokenizes them normally (as identifiers), and the parser reassembles the tokens into a single step string. This works because flow step lines are plain English words that tokenize cleanly as identifiers. See the [Lexer reference](/reference/lexer) for details on this design decision (Option C).
 
 This is why `MUST respond within 30 seconds` works without the lexer trying to parse `30` as an integer. The lexer knows -- because it just emitted `MUST` -- that the rest of the line is prose.
 

@@ -73,10 +73,9 @@ TEST
   EXPECT CONTAINS "ticket"
 ```
 
-Run it:
+Compile it:
 ```bash
-echo "I'm upset about my order" | human run support.hmn
-# OR feed it directly to an AI such as Claude or GPT
+hmn compile support.hmn
 ```
 
 Output:
@@ -109,12 +108,15 @@ Everything else is just names, values, and free-form text.
 
 ## Implementation Note
 
-Human is experimental. The language spec is stable, but we're building tooling:
+Human is experimental. The language spec is stable. The tooling is built and working:
 
-- Hand-written lexer for tokens
-- Recursive descent parser 
-- Direct parse to typed structures
-- Simple error messages with line numbers
+- Hand-written lexer (`human-lexer`)
+- Recursive descent parser (`human-parser`)
+- Import resolver with circular-dependency detection (`human-resolver`)
+- Multi-format compiler (`human-compiler`) -- outputs prompt, JSON, YAML, TOML, TXT, HMN
+- CLI (`hmn`) with `validate`, `compile`, and `fmt` commands
+- VS Code extension with syntax highlighting and on-save diagnostics
+- Tree-sitter grammar for editor integrations
 
 You don't need our tools to use Human. It's just text. But tools make it better.
 

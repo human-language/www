@@ -2,7 +2,9 @@
 title: "Standard Library"
 description: ""
 sidebar:
-  order: 5
+  hidden: true
 ---
 
-Coming soon.
+No standard library exists yet. When shared constraint sets and reusable packages are implemented, they will be documented here.
+
+See the [Modules guide](/guide/modules) for the planned package system.
